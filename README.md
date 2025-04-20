@@ -162,8 +162,8 @@ Gestionar actividades (Tareas/Eventos) en proyectos colaborativos mediante conso
 
 ## Responsabilidad 
 
--Rocio : Apatados 5
--Pablo : Apatados 2
--Sergio : Apartados 1 y 3 
--Juan : Apatados 6
--Alfonso : Apatados 7
+-Rocio : Apatados 5  
+-Pablo : Apatados 2  
+-Sergio : Apartados 1 y 3   
+-Juan : Apatados 6  
+-Alfonso : Apatados 7  
