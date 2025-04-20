@@ -1,6 +1,8 @@
 package org.example.dominio
 
+import org.example.aplicacion.GestorTareas
 import org.example.utilidades.Utils
+import org.example.dominio.EstadoTarea
 /**
  * Crea la instancia de una tarea.
  *
@@ -10,11 +12,13 @@ import org.example.utilidades.Utils
  * @property descripcion .
  * @property estado .
  */
+
 class Tarea private constructor(
     id: Int,
     fechaCreacion: String,
     descripcion: String,
-    private var estado: String
+    private var estado: EstadoTarea,
+    var usuarioAsignado: Usuario? = null
 ) : Actividad(id, fechaCreacion, descripcion) {
 
     companion object {
@@ -25,11 +29,13 @@ class Tarea private constructor(
                 generarId(fechaActual),
                 fechaActual,
                 desc,
-                "ABIERTA"
+                EstadoTarea.ABIERTA
             )
         }
     }
+
     override fun obtenerDetalle(): String {
-        return "Tarea ${descripcion} [Estado: $estado]"
+        val asignado = usuarioAsignado?.let { " - Asignado a: ${it.nombre}" } ?: ""
+        return "Tarea #$id: $descripcion [Estado: ${estado.name}]$asignado"
     }
 }

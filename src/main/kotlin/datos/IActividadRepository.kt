@@ -10,4 +10,5 @@ import org.example.dominio.Actividad
 interface IActividadRepository {
     fun aniadirActividad(actividad: Actividad)
     fun obtenerTodas(): List<Actividad>
+    fun obtenerPorId(id: Int): Actividad?
 }

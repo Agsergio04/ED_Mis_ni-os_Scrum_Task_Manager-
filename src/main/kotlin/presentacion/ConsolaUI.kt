@@ -1,8 +1,21 @@
 package org.example.presentacion
 
 import org.example.aplicacion.ActividadService
+import org.example.dominio.EstadoTarea
 import java.util.*
 class ConsolaUI(private val servicio: ActividadService) {
+    private fun mostrarMenu() {
+        println("\n=== GESTOR DE ACTIVIDADES ===")
+        println("1. Crear nueva actividad")
+        println("2. Listar todas las actividades")
+        println("3. Cambiar estado de tarea")
+        println("4. Crear usuario")
+        println("5. Asignar tarea a usuario")
+        println("6. Listar tareas por usuario")
+        println("7. Salir")
+        print("Seleccione una opción: ")
+    }
+
     fun iniciar() {
         var opcion: Int
         do {
@@ -11,19 +24,79 @@ class ConsolaUI(private val servicio: ActividadService) {
             when(opcion) {
                 1 -> crearActividad()
                 2 -> listarActividades()
-                3 -> println("Saliendo...")
+                3 -> cambiarEstadoTarea()
+                4 -> crearUsuario()
+                5 -> asignarTarea()
+                6 -> listarTareasPorUsuario()
+                7 -> println("Saliendo...")
                 else -> println("Opción no válida")
             }
-        } while(opcion != 3)
+        } while(opcion != 7)
     }
-    private fun mostrarMenu() {
-        println("\n=== GESTOR DE ACTIVIDADES ===")
-        println("1. Crear nueva actividad")
-        println("2. Listar todas las actividades")
-        println("3. Salir")
 
-        print("Seleccione una opción: ")
+    private fun crearUsuario() {
+        try {
+            print("Nombre del usuario: ")
+            val nombre = leerCadena()
+            val usuario = servicio.crearUsuario(nombre)
+            println("Usuario creado con ID: ${usuario.obtenerId()}")
+        } catch(e: Exception) {
+            println("Error al crear usuario: ${e.message}")
+        }
     }
+
+    private fun asignarTarea() {
+        try {
+            print("ID de la tarea: ")
+            val idTarea = leerCadena().toInt()
+            print("ID del usuario: ")
+            val idUsuario = leerCadena().toInt()
+            servicio.asignarTarea(idTarea, idUsuario)
+            println("Tarea asignada correctamente")
+        } catch(e: NumberFormatException) {
+            println("Error: ID debe ser un número")
+        } catch(e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    private fun listarTareasPorUsuario() {
+        try {
+            print("ID del usuario: ")
+            val idUsuario = leerCadena().toInt()
+            val tareas = servicio.obtenerTareasPorUsuario(idUsuario)
+            if (tareas.isEmpty()) {
+                println("No hay tareas asignadas a este usuario")
+            } else {
+                println("\n=== TAREAS ASIGNADAS ===")
+                tareas.forEach { println(it.obtenerDetalle()) }
+            }
+        } catch(e: NumberFormatException) {
+            println("Error: ID debe ser un número")
+        }
+    }
+
+
+    private fun cambiarEstadoTarea() {
+        try {
+            println("\n=== CAMBIAR ESTADO DE TAREA ===")
+            print("Ingrese el ID de la tarea: ")
+            val id = leerCadena().toInt()
+            print("Seleccione el nuevo estado (1. ABIERTA, 2. EN_PROGRESO, 3. ACABADA): ")
+            when(leerOpcion()) {
+                1 -> servicio.cambiarEstadoTarea(id, EstadoTarea.ABIERTA)
+                2 -> servicio.cambiarEstadoTarea(id, EstadoTarea.EN_PROGRESO)
+                3 -> servicio.cambiarEstadoTarea(id, EstadoTarea.ACABADA)
+                else -> println("Opción no válida")
+            }
+            println("Estado actualizado exitosamente!")
+        } catch(e: NumberFormatException) {
+            println("Error: ID debe ser un número")
+        } catch(e: IllegalArgumentException) {
+            println("Error: ${e.message}")
+        }
+    }
+
     private fun crearActividad() {
         println("\nTipo de actividad:")
         println("1. Tarea")

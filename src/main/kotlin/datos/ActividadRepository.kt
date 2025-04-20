@@ -11,4 +11,8 @@ class ActividadRepository : IActividadRepository {
     override fun obtenerTodas(): List<Actividad> {
         return actividades.toList()
     }
+
+    override fun obtenerPorId(id: Int): Actividad? {
+        return actividades.find {it.obtenerId() == id }
+    }
 }

@@ -1,5 +1,6 @@
 package org.example.dominio
 
+import org.example.aplicacion.GestorTareas
 import org.example.utilidades.Utils
 /**
  * Crea la instancia de un evento.
@@ -19,6 +20,7 @@ class Evento private constructor(
     private val fecha: String,
     private val ubicacion: String
 ) : Actividad(id, fechaCreacion, descripcion) {
+
     companion object {
         fun creaInstancia(desc: String, fecha: String, ubicacion: String): Evento {
             require(desc.isNotEmpty()) { "Descripción no puede estar vacía" }
@@ -34,7 +36,8 @@ class Evento private constructor(
             )
         }
     }
+
     override fun obtenerDetalle(): String {
-        return "Evento ${descripcion} [Fecha: $fecha, Ubicación: $ubicacion]"
+        return "Evento #$id: $descripcion [Fecha: $fecha, Ubicación: $ubicacion]"
     }
 }
