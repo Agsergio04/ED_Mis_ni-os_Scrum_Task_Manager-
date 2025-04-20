@@ -157,3 +157,13 @@ Gestionar actividades (Tareas/Eventos) en proyectos colaborativos mediante conso
 ---
 
 **Enlace recomendado**: [10 estrategias para descomponer historias](https://medium.com/the-liberators/10-powerful-strategies-for-breaking-down-user-stories-in-scrum-with-cheatsheet-2cd9aae7d0eb)
+
+---
+
+## Responsabilidad 
+
+-Rocio : Apatados 5
+-Pablo : Apatados 2
+-Sergio : Apartados 1 y 3 
+-Juan : Apatados 6
+-Alfonso : Apatados 7
