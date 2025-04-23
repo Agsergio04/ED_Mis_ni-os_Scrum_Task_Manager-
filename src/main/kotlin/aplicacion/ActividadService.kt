@@ -14,8 +14,8 @@ import org.example.aplicacion.HistorialService
  * Gestiona la lógica de negocio de actividades, usuarios e historial.
  */
 
-class ActividadService(
-    private val actividadRepo: IActividadRepository,
+class ActividadService(  
+    private val actividadRepo: IActividadRepository,  
     private val usuarioRepo: IUsuarioRepository,
     private val historialService: HistorialService,
     val dashboardService: DashboardService

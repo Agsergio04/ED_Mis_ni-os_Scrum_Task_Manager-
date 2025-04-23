@@ -1,9 +1,11 @@
 package org.example.presentacion
 
+import DashboardService
 import org.example.aplicacion.ActividadService
 import org.example.dominio.EstadoTarea
+import org.example.dominio.Evento
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService) {  
+class ConsolaUI(private val servicio: ActividadService, dashboardService: DashboardService) {
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  
     println("1. Crear nueva actividad")  
@@ -14,7 +16,8 @@ class ConsolaUI(private val servicio: ActividadService) {
     println("6. Listar tareas por usuario")  
     println("7. Ver historial de actividad") 
     println("8. Panel de control (Dashboard)")
-    println("9. Salir")
+    println("9. Asociar subtarea a tarea madre")
+    println("10. Salir")
     print("Seleccione una opción: ")
 }
 
@@ -32,10 +35,11 @@ fun iniciar() {
             6 -> listarTareasPorUsuario()  
             7 -> verHistorial()
             8 -> mostrarDashboard()
-            9 -> println("Saliendo...")  
+            9 -> asociarSubtarea()
+            10 -> println("Saliendo...")  
             else -> println("Opción no válida")  
         }  
-    } while(opcion != 9)
+    } while(opcion != 10)
 }
 
     private fun crearUsuario() {
@@ -179,6 +183,20 @@ private fun verHistorial() {
             println("Error: ${e.message}")  
         }  
     }  
+
+
+fun asociarSubtarea() {
+    try {
+        print("ID de la tarea madre: ")
+        val idMadre = leerCadena().toInt()
+        print("ID de la subtarea: ")
+        val idHija = leerCadena().toInt()
+        servicio.asociarSubtarea(idMadre, idHija)
+        println("Subtarea asociada correctamente")
+    } catch(e: Exception) {
+        println("Error: ${e.message}")
+    }
+}
 
 
 private fun mostrarDashboard() {
