@@ -1,6 +1,9 @@
 package org.example.datos
 
 import org.example.dominio.Actividad
+import org.example.dominio.EstadoTarea
+import org.example.dominio.Evento
+import org.example.dominio.Tarea
 
 class ActividadRepository : IActividadRepository {
     private val actividades = mutableListOf<Actividad>()

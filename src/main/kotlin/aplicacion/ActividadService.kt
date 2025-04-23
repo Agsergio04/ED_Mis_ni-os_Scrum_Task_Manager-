@@ -1,6 +1,7 @@
 package org.example.aplicacion  
 
-import org.example.datos.IActividadRepository  
+import DashboardService
+import org.example.datos.IActividadRepository
 import org.example.datos.IUsuarioRepository  
 import org.example.dominio.EstadoTarea  
 import org.example.dominio.Tarea  
@@ -15,11 +16,8 @@ import org.example.dominio.Historial
 class ActividadService(  
     private val actividadRepo: IActividadRepository,  
     private val usuarioRepo: IUsuarioRepository,  
-    private val historialService: HistorialService  
-    private val actividadRepo: IActividadRepository,  
-    private val usuarioRepo: IUsuarioRepository,  
     private val historialService: HistorialService,
-    private val dashboardService: DashboardService
+    val dashboardService: DashboardService
 ) {  
 
     fun crearTarea(descripcion: String) {  

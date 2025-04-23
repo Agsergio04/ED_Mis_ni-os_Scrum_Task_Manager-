@@ -1,3 +1,7 @@
+import org.example.datos.IActividadRepository
+import org.example.dominio.EstadoTarea
+import org.example.utilidades.Utils
+
 class DashboardService(
     private val actividadRepo: IActividadRepository
 ) {

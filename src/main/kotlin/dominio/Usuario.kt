@@ -1,8 +1,8 @@
 package org.example.dominio
 
-class Usuario private constructor(
+class Usuario (
     val nombre : String,
-    private val id : Int
+    private val id : Int = incrementarId()
 ) {
     fun obtenerId() : Int{
         return id
@@ -14,11 +14,5 @@ class Usuario private constructor(
         fun incrementarId() : Int{
             return identificador + 1
         }
-
-        fun crearUsuario(nombre : String) : Usuario{
-            return Usuario(nombre,incrementarId())
-
-        }
-
     }
 }

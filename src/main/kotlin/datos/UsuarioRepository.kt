@@ -8,7 +8,7 @@ class UsuarioRepository : IUsuarioRepository {
     private var contadorId = 1
 
     override fun crearUsuario(nombre: String): Usuario {
-        val usuario = crearUsuario(nombre)
+        val usuario = Usuario(nombre)
         usuarios.add(usuario)
         return usuario
     }
