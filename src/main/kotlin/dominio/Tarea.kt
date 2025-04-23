@@ -18,7 +18,8 @@ class Tarea private constructor(
     fechaCreacion: String,
     descripcion: String,
     private var estado: EstadoTarea,
-    var usuarioAsignado: Usuario? = null
+    var usuarioAsignado: Usuario? = null,
+    private val subtareas: MutableList<Tarea> = mutableListOf()
 ) : Actividad(id, fechaCreacion, descripcion) {
 
     companion object {
@@ -34,6 +35,19 @@ class Tarea private constructor(
         }
     }
 
+    fun agregarSubtarea(subtarea: Tarea) {
+        subtareas.add(subtarea)
+    }
+
+    fun obtenerSubtareas(): List<Tarea> = subtareas
+
+    override fun cambiarEstado(estado: EstadoTarea) {
+        if (estado == EstadoTarea.ACABADA && subtareas.any { it.estadoTarea != EstadoTarea.ACABADA }) {
+            throw IllegalStateException("No se puede cerrar la tarea madre con subtareas abiertas")
+        }
+        super.cambiarEstado(estado)
+    }
+    
     override fun obtenerDetalle(): String {
         val asignado = usuarioAsignado?.let { " - Asignado a: ${it.nombre}" } ?: ""
         return "Tarea #$id: $descripcion [Estado: ${estado.name}]$asignado"
