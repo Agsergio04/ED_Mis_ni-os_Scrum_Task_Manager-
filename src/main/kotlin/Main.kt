@@ -20,5 +20,6 @@ fun main() {
         historialService = historialService,
         dashboardService = dashboardService
     )
+
     ConsolaUI(servicio,dashboardService).iniciar()
 } 
