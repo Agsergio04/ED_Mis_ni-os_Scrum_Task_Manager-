@@ -15,4 +15,23 @@ class ActividadRepository : IActividadRepository {
     override fun obtenerPorId(id: Int): Actividad? {
         return actividades.find {it.obtenerId() == id }
     }
+
+
+        
+    override fun contarTareasPorEstado(estado: EstadoTarea): Int {
+        return actividades.filterIsInstance<Tarea>()
+                         .count { it.estadoTarea == estado }
+    }
+    
+    override fun obtenerEventosEntreFechas(inicio: String, fin: String): List<Evento> {
+        return actividades.filterIsInstance<Evento>()
+                         .filter { 
+                             it.fecha >= inicio && it.fecha <= fin 
+                         }
+    }
+    
+    override fun contarTareasConSubtareas(): Int {
+        
+        return 0
+    }
 }
