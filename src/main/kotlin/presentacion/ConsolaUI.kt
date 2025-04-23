@@ -3,36 +3,39 @@ package org.example.presentacion
 import org.example.aplicacion.ActividadService
 import org.example.dominio.EstadoTarea
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService) {
-    private fun mostrarMenu() {
-        println("\n=== GESTOR DE ACTIVIDADES ===")
-        println("1. Crear nueva actividad")
-        println("2. Listar todas las actividades")
-        println("3. Cambiar estado de tarea")
-        println("4. Crear usuario")
-        println("5. Asignar tarea a usuario")
-        println("6. Listar tareas por usuario")
-        println("7. Salir")
+class ConsolaUI(private val servicio: ActividadService) {  
+    private fun mostrarMenu() {  
+        println("\n=== GESTOR DE ACTIVIDADES ===")  
+        println("1. Crear nueva actividad")  
+        println("2. Listar todas las actividades")  
+        println("3. Cambiar estado de tarea")  
+        println("4. Crear usuario")  
+        println("5. Asignar tarea a usuario")  
+        println("6. Listar tareas por usuario")  
+        println("7. Ver historial de actividad") 
+        println("8. Salir")
         print("Seleccione una opción: ")
-    }
+    }  
 
-    fun iniciar() {
-        var opcion: Int
-        do {
-            mostrarMenu()
-            opcion = leerOpcion()
-            when(opcion) {
-                1 -> crearActividad()
-                2 -> listarActividades()
-                3 -> cambiarEstadoTarea()
-                4 -> crearUsuario()
-                5 -> asignarTarea()
-                6 -> listarTareasPorUsuario()
-                7 -> println("Saliendo...")
-                else -> println("Opción no válida")
-            }
-        } while(opcion != 7)
-    }
+
+    fun iniciar() {  
+        var opcion: Int  
+        do {  
+            mostrarMenu()  
+            opcion = leerOpcion()  
+            when(opcion) {  
+                1 -> crearActividad()  
+                2 -> listarActividades()  
+                3 -> cambiarEstadoTarea()  
+                4 -> crearUsuario()  
+                5 -> asignarTarea()  
+                6 -> listarTareasPorUsuario()  
+                7 -> verHistorial()
+                8 -> println("Saliendo...")  
+                else -> println("Opción no válida")  
+            }  
+        } while(opcion != 8)
+    } 
 
     private fun crearUsuario() {
         try {
@@ -155,3 +158,23 @@ class ConsolaUI(private val servicio: ActividadService) {
         return Scanner(System.`in`).nextLine().trim()
     }
 }
+
+private fun verHistorial() {  
+        try {  
+            print("ID de la actividad: ")  
+            val id = leerCadena().toInt()  
+            val historial = servicio.obtenerHistorial(id)  
+            if (historial.isEmpty()) {  
+                println("No hay registros para esta actividad")  
+            } else {  
+                println("\n=== HISTORIAL (#$id) ===")  
+                historial.forEach {  
+                    println("${it.fecha} - ${it.descripcion}")  
+                }  
+            }  
+        } catch(e: NumberFormatException) {  
+            println("Error: ID debe ser un número")  
+        } catch(e: Exception) {  
+            println("Error: ${e.message}")  
+        }  
+    }  
