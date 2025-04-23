@@ -7,7 +7,8 @@ import org.example.dominio.EstadoTarea
 import org.example.dominio.Tarea  
 import org.example.dominio.Evento  
 import org.example.dominio.Usuario  
-import org.example.dominio.Historial  
+import org.example.dominio.Historial
+import org.example.aplicacion.HistorialService
 
 /**
  * Gestiona la lógica de negocio de actividades, usuarios e historial.
@@ -15,7 +16,7 @@ import org.example.dominio.Historial
 
 class ActividadService(  
     private val actividadRepo: IActividadRepository,  
-    private val usuarioRepo: IUsuarioRepository,  
+    private val usuarioRepo: IUsuarioRepository,
     private val historialService: HistorialService,
     val dashboardService: DashboardService
 ) {  
@@ -56,7 +57,7 @@ class ActividadService(
         require(tarea != null) { "Tarea no encontrada" }  
         require(usuario != null) { "Usuario no encontrado" }  
 
-        tarea.usuarioAsignado = usuario  
+        tarea.usuarioAsignado = usuario
         historialService.registrarAccion(idTarea, "Asignada al usuario #${usuario.obtenerId()}") 
     }  
 

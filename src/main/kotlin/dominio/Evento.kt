@@ -1,5 +1,6 @@
 package org.example.dominio
 
+import org.example.aplicacion.GestorTareas
 import org.example.utilidades.Utils
 /**
  * Crea la instancia de un evento.
@@ -17,7 +18,7 @@ class Evento private constructor(
     fechaCreacion: String,
     descripcion: String,
     val fecha: String,
-    private val ubicacion: String
+    val ubicacion: String
 ) : Actividad(id, fechaCreacion, descripcion) {
 
     companion object {
