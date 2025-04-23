@@ -5,10 +5,9 @@ import org.example.dominio.Usuario
 
 class UsuarioRepository : IUsuarioRepository {
     private val usuarios = mutableListOf<Usuario>()
-    private var contadorId = 1
 
     override fun crearUsuario(nombre: String): Usuario {
-        val usuario = crearUsuario(nombre)
+        val usuario = Usuario(nombre)
         usuarios.add(usuario)
         return usuario
     }

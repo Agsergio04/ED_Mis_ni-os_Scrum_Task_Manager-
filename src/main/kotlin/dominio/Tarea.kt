@@ -1,6 +1,5 @@
 package org.example.dominio
 
-import org.example.aplicacion.GestorTareas
 import org.example.utilidades.Utils
 import org.example.dominio.EstadoTarea
 /**

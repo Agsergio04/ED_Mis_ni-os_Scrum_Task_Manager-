@@ -1,25 +1,24 @@
 package org.example.aplicacion  
 
-import org.example.datos.IActividadRepository  
+import DashboardService
+import org.example.datos.IActividadRepository
 import org.example.datos.IUsuarioRepository  
 import org.example.dominio.EstadoTarea  
 import org.example.dominio.Tarea  
 import org.example.dominio.Evento  
 import org.example.dominio.Usuario  
-import org.example.dominio.Historial  
+import org.example.dominio.Historial
+import org.example.aplicacion.HistorialService
 
 /**
  * Gestiona la lógica de negocio de actividades, usuarios e historial.
  */
 
-class ActividadService(  
-    private val actividadRepo: IActividadRepository,  
-    private val usuarioRepo: IUsuarioRepository,  
-    private val historialService: HistorialService  
-    private val actividadRepo: IActividadRepository,  
-    private val usuarioRepo: IUsuarioRepository,  
+class ActividadService(
+    private val actividadRepo: IActividadRepository,
+    private val usuarioRepo: IUsuarioRepository,
     private val historialService: HistorialService,
-    private val dashboardService: DashboardService
+    val dashboardService: DashboardService
 ) {  
 
     fun crearTarea(descripcion: String) {  
@@ -58,7 +57,7 @@ class ActividadService(
         require(tarea != null) { "Tarea no encontrada" }  
         require(usuario != null) { "Usuario no encontrado" }  
 
-        tarea.usuarioAsignado = usuario  
+        tarea.usuarioAsignado = usuario
         historialService.registrarAccion(idTarea, "Asignada al usuario #${usuario.obtenerId()}") 
     }  
 

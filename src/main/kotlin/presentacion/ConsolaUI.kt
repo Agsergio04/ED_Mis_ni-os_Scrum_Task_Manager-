@@ -1,9 +1,19 @@
 package org.example.presentacion
 
+import DashboardService
 import org.example.aplicacion.ActividadService
 import org.example.dominio.EstadoTarea
+import org.example.dominio.Evento
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService) {  
+class ConsolaUI (
+
+    private val servicio: ActividadService,
+    private val dashboardService : DashboardService
+
+) {
+
+
+
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  
     println("1. Crear nueva actividad")  
@@ -14,7 +24,8 @@ class ConsolaUI(private val servicio: ActividadService) {
     println("6. Listar tareas por usuario")  
     println("7. Ver historial de actividad") 
     println("8. Panel de control (Dashboard)")
-    println("9. Salir")
+    println("9. Asociar subtarea a tarea madre")
+    println("10. Salir")
     print("Seleccione una opción: ")
 }
 
@@ -32,11 +43,12 @@ fun iniciar() {
             6 -> listarTareasPorUsuario()  
             7 -> verHistorial()
             8 -> mostrarDashboard()
-            9 -> println("Saliendo...")  
+            9 -> asociarSubtarea()
+            10 -> println("Saliendo...")  
             else -> println("Opción no válida")  
-        }  
-    } while(opcion != 9)
-}
+            }
+        } while(opcion != 10)
+    }
 
     private fun crearUsuario() {
         try {
@@ -158,9 +170,8 @@ fun iniciar() {
     private fun leerCadena(): String {
         return Scanner(System.`in`).nextLine().trim()
     }
-}
 
-private fun verHistorial() {  
+    private fun verHistorial() {
         try {  
             print("ID de la actividad: ")  
             val id = leerCadena().toInt()  
@@ -178,43 +189,56 @@ private fun verHistorial() {
         } catch(e: Exception) {  
             println("Error: ${e.message}")  
         }  
-    }  
+    }
+
+    fun asociarSubtarea() {
+        try {
+            print("ID de la tarea madre: ")
+            val idMadre = leerCadena().toInt()
+            print("ID de la subtarea: ")
+            val idHija = leerCadena().toInt()
+            servicio.asociarSubtarea(idMadre, idHija)
+            println("Subtarea asociada correctamente")
+        } catch(e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    fun mostrarDashboard() {
+        println("\n=== PANEL DE CONTROL ===")
 
 
-private fun mostrarDashboard() {
-    println("\n=== PANEL DE CONTROL ===")
-    
-    
     val metricasHoy = servicio.dashboardService.obtenerMetricasHoy()
-    println("\n📊 ESTADO ACTUAL DE TAREAS:")
+    println("\n ESTADO ACTUAL DE TAREAS:")
     println("  - Abiertas: ${metricasHoy["tareasAbiertas"]}")
     println("  - En progreso: ${metricasHoy["tareasEnProgreso"]}")
     println("  - Finalizadas: ${metricasHoy["tareasFinalizadas"]}")
-    
-   
+
+
     val eventosHoy = metricasHoy["eventosHoy"] as List<Evento>
-    println("\n📅 EVENTOS PARA HOY (${eventosHoy.size}):")
-    eventosHoy.take(3).forEach { 
-        println("  - ${it.obtenerDetalle()}") 
+    println("\n EVENTOS PARA HOY (${eventosHoy.size}):")
+    eventosHoy.take(3).forEach {
+        println("  - ${it.obtenerDetalle()}")
     }
     if (eventosHoy.size > 3) {
         println("  ... y ${eventosHoy.size - 3} más")
     }
-    
-   
+
+
     val metricasSemana = servicio.dashboardService.obtenerMetricasSemana()
     val eventosSemana = metricasSemana["eventosSemana"] as List<Evento>
-    println("\n🗓️ EVENTOS ESTA SEMANA (${eventosSemana.size}):")
-    eventosSemana.take(3).forEach { 
-        println("  - ${it.obtenerDetalle()}") 
+    println("\n🗓 EVENTOS ESTA SEMANA (${eventosSemana.size}):")
+    eventosSemana.take(3).forEach {
+        println("  - ${it.obtenerDetalle()}")
     }
     if (eventosSemana.size > 3) {
         println("  ... y ${eventosSemana.size - 3} más")
     }
-    
-    
-    println("\n🔗 TAREAS CON SUBTAREAS: ${metricasHoy["tareasConSubtareas"]}")
-    
+
+
+    println("\n TAREAS CON SUBTAREAS: ${metricasHoy["tareasConSubtareas"]}")
+
     println("\nPresione Enter para continuar...")
     leerCadena()
+    }
 }

@@ -1,6 +1,7 @@
 package org.example  
 
-import org.example.aplicacion.ActividadService  
+import DashboardService
+import org.example.aplicacion.ActividadService
 import org.example.aplicacion.HistorialService  
 import org.example.datos.ActividadRepository  
 import org.example.datos.HistorialRepository  
@@ -19,5 +20,5 @@ fun main() {
         historialService = historialService,
         dashboardService = dashboardService
     )  
-    ConsolaUI(servicio).iniciar()  
+    ConsolaUI(servicio,dashboardService).iniciar()
 } 
