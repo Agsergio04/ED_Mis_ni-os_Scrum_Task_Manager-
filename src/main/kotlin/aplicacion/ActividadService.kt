@@ -16,6 +16,10 @@ class ActividadService(
     private val actividadRepo: IActividadRepository,  
     private val usuarioRepo: IUsuarioRepository,  
     private val historialService: HistorialService  
+    private val actividadRepo: IActividadRepository,  
+    private val usuarioRepo: IUsuarioRepository,  
+    private val historialService: HistorialService,
+    private val dashboardService: DashboardService
 ) {  
 
     fun crearTarea(descripcion: String) {  
