@@ -71,4 +71,12 @@ class ActividadService(
     fun obtenerHistorial(idActividad: Int): List<Historial> {  
         return historialService.obtenerHistorial(idActividad)  
     }  
+
+   fun asociarSubtarea(idMadre: Int, idHija: Int) {
+        val tareaMadre = actividadRepo.obtenerPorId(idMadre) as? Tarea ?: throw IllegalArgumentException("Tarea madre no encontrada")
+        val tareaHija = actividadRepo.obtenerPorId(idHija) as? Tarea ?: throw IllegalArgumentException("Tarea hija no encontrada")
+        tareaMadre.agregarSubtarea(tareaHija)
+        historialService.registrarAccion(idMadre, "Subtarea #${tareaHija.obtenerId()} asociada")
+    } 
+    
 }  
