@@ -179,3 +179,42 @@ private fun verHistorial() {
             println("Error: ${e.message}")  
         }  
     }  
+
+
+private fun mostrarDashboard() {
+    println("\n=== PANEL DE CONTROL ===")
+    
+    
+    val metricasHoy = servicio.dashboardService.obtenerMetricasHoy()
+    println("\n📊 ESTADO ACTUAL DE TAREAS:")
+    println("  - Abiertas: ${metricasHoy["tareasAbiertas"]}")
+    println("  - En progreso: ${metricasHoy["tareasEnProgreso"]}")
+    println("  - Finalizadas: ${metricasHoy["tareasFinalizadas"]}")
+    
+   
+    val eventosHoy = metricasHoy["eventosHoy"] as List<Evento>
+    println("\n📅 EVENTOS PARA HOY (${eventosHoy.size}):")
+    eventosHoy.take(3).forEach { 
+        println("  - ${it.obtenerDetalle()}") 
+    }
+    if (eventosHoy.size > 3) {
+        println("  ... y ${eventosHoy.size - 3} más")
+    }
+    
+   
+    val metricasSemana = servicio.dashboardService.obtenerMetricasSemana()
+    val eventosSemana = metricasSemana["eventosSemana"] as List<Evento>
+    println("\n🗓️ EVENTOS ESTA SEMANA (${eventosSemana.size}):")
+    eventosSemana.take(3).forEach { 
+        println("  - ${it.obtenerDetalle()}") 
+    }
+    if (eventosSemana.size > 3) {
+        println("  ... y ${eventosSemana.size - 3} más")
+    }
+    
+    
+    println("\n🔗 TAREAS CON SUBTAREAS: ${metricasHoy["tareasConSubtareas"]}")
+    
+    println("\nPresione Enter para continuar...")
+    leerCadena()
+}
