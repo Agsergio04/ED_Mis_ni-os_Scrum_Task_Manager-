@@ -19,6 +19,7 @@ fun main() {
         usuarioRepo = usuarioRepo,  
         historialService = historialService,
         dashboardService = dashboardService
-    )  
+    )
+
     ConsolaUI(servicio,dashboardService).iniciar()
 } 
