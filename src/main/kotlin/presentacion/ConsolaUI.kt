@@ -1,9 +1,11 @@
 package org.example.presentacion
 
+import DashboardService
 import org.example.aplicacion.ActividadService
 import org.example.dominio.EstadoTarea
+import org.example.dominio.Evento
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService) {  
+class ConsolaUI(private val servicio: ActividadService, dashboardService: DashboardService) {
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  
     println("1. Crear nueva actividad")  
@@ -158,7 +160,7 @@ fun iniciar() {
     private fun leerCadena(): String {
         return Scanner(System.`in`).nextLine().trim()
     }
-}
+
 
 private fun verHistorial() {  
         try {  
@@ -217,4 +219,5 @@ private fun mostrarDashboard() {
     
     println("\nPresione Enter para continuar...")
     leerCadena()
+    }
 }
