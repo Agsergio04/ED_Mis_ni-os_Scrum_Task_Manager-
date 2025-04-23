@@ -12,10 +12,12 @@ fun main() {
     val usuarioRepo = UsuarioRepository()  
     val historialRepo = HistorialRepository()
     val historialService = HistorialService(historialRepo)
+    val dashboardService = DashboardService(actividadRepo)
     val servicio = ActividadService(  
         actividadRepo = actividadRepo,  
         usuarioRepo = usuarioRepo,  
-        historialService = historialService
+        historialService = historialService,
+        dashboardService = dashboardService
     )  
     ConsolaUI(servicio).iniciar()  
-}  
+} 
