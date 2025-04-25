@@ -12,6 +12,7 @@ abstract class Actividad(
     protected val id: Int,
     private val fechaCreacion: String,
     protected val descripcion: String,
+    val etiquetas: String,
     var estadoTarea : EstadoTarea = EstadoTarea.ABIERTA
 
 )  {

@@ -2,8 +2,10 @@ package org.example.presentacion
 
 import DashboardService
 import org.example.aplicacion.ActividadService
+import org.example.dominio.Actividad
 import org.example.dominio.EstadoTarea
 import org.example.dominio.Evento
+import org.example.dominio.Usuario
 import java.util.*
 class ConsolaUI(private val servicio: ActividadService, dashboardService: DashboardService) {
     private fun mostrarMenu() {  
@@ -17,7 +19,8 @@ class ConsolaUI(private val servicio: ActividadService, dashboardService: Dashbo
     println("7. Ver historial de actividad") 
     println("8. Panel de control (Dashboard)")
     println("9. Asociar subtarea a tarea madre")
-    println("10. Salir")
+    println("10. Filtrar por diferentes campos.")
+    println("11. Salir")
     print("Seleccione una opción: ")
 }
 
@@ -36,10 +39,12 @@ fun iniciar() {
             7 -> verHistorial()
             8 -> mostrarDashboard()
             9 -> asociarSubtarea()
-            10 -> println("Saliendo...")  
+            10 -> mostrarMenuFiltrado()
+            11 -> println("Saliendo...")
+
             else -> println("Opción no válida")  
         }  
-    } while(opcion != 10)
+    } while(opcion != 11)
 }
 
     private fun crearUsuario() {
@@ -122,7 +127,9 @@ fun iniciar() {
         try {
             print("Descripción de la tarea: ")
             val desc = leerCadena()
-            servicio.crearTarea(desc)
+            println("Introduce las etiquetas necesarias (separadas por | ; |)")
+            val etiquetas = leerCadena()
+            servicio.crearTarea(desc, etiquetas)
             println("Tarea creada exitosamente!")
         } catch(e: IllegalArgumentException) {
             println("Error: ${e.message}")
@@ -136,7 +143,9 @@ fun iniciar() {
             val fecha = leerCadena()
             print("Ubicación: ")
             val ubicacion = leerCadena()
-            servicio.crearEvento(desc, fecha, ubicacion)
+            print("Introduce las etiquetas necesarias (separadas por | ; |): ")
+            val etiquetas = leerCadena()
+            servicio.crearEvento(desc, fecha, ubicacion, etiquetas)
             println("Evento creado exitosamente!")
         } catch(e: IllegalArgumentException) {
             println("Error: ${e.message}")
@@ -236,4 +245,48 @@ private fun mostrarDashboard() {
     println("\nPresione Enter para continuar...")
     leerCadena()
     }
+
+
+    fun mostrarMenuFiltrado() {
+        println("=== FILTRO DE ACTIVIDADES ===")
+
+        println("¿Deseas filtrar por tipo? (Tarea/Eventos/ninguno): ")
+        val tipo = readLine()?.trim()?.takeIf { it.isNotBlank() }
+
+        var estado: EstadoTarea? = null
+        if (tipo.equals("Tarea", ignoreCase = true)) {
+            println("Filtrar por estado (ABIERTA / EN_PROGRESO / FINALIZADA / ninguno): ")
+            val estadoInput = readLine()?.trim()?.uppercase()
+            estado = try {
+                EstadoTarea.valueOf(estadoInput ?: "")
+            } catch (e: Exception) {
+                null
+            }
+        }
+
+        println("Filtrar por etiquetas (separadas por ; o vacío para omitir): ")
+        val etiquetasInput = readLine()?.trim()
+        val etiquetas = etiquetasInput?.split(";")?.map { it.trim() }?.filter { it.isNotEmpty() }?.takeIf { it.isNotEmpty() }
+
+        println("Filtrar por usuario asignado (nombre o vacío): ")
+        val nombreUsuario = readLine()?.trim()
+
+        println("Filtrar por fecha (HOY / MAÑANA / SEMANA / MES / ninguno): ")
+        val fechaFiltro = readLine()?.trim()?.uppercase()?.takeIf {
+            listOf("HOY", "MAÑANA", "SEMANA", "MES").contains(it)
+        }
+
+        // Llamamos a la función de filtrar actividades desde el servicio
+        val filtradas = servicio.filtrarActividades(
+            tipo = tipo,
+            estado = estado,
+            etiquetas = etiquetas,
+            nombreUsuario = nombreUsuario,
+            fechaFiltro = fechaFiltro
+        )
+
+        println("Actividades filtradas: ${filtradas.size}")
+        filtradas.forEach { println(it.obtenerDetalle()) }
+    }
+
 }

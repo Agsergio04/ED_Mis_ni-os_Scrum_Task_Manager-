@@ -18,18 +18,20 @@ class Tarea private constructor(
     descripcion: String,
     private var estado: EstadoTarea,
     var usuarioAsignado: Usuario? = null,
+    etiquetas: String,
     private val subtareas: MutableList<Tarea> = mutableListOf()
-) : Actividad(id, fechaCreacion, descripcion) {
+) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
-        fun creaInstancia(desc: String): Tarea {
+        fun creaInstancia(desc: String, etiquetas: String): Tarea {
             require(desc.isNotEmpty()) { "Descripción no puede estar vacía" }
             val fechaActual = Utils.obtenerFechaActual()
             return Tarea(
                 generarId(fechaActual),
                 fechaActual,
                 desc,
-                EstadoTarea.ABIERTA
+                EstadoTarea.ABIERTA,
+                etiquetas = etiquetas
             )
         }
     }
@@ -49,6 +51,6 @@ class Tarea private constructor(
     
     override fun obtenerDetalle(): String {
         val asignado = usuarioAsignado?.let { " - Asignado a: ${it.nombre}" } ?: ""
-        return "Tarea #$id: $descripcion [Estado: ${estado.name}]$asignado"
+        return "Tarea #$id: $descripcion [Estado: ${estado.name}]$asignado | [ETIQUETAS: $etiquetas] "
     }
 }

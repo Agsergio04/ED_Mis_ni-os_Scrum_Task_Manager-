@@ -17,11 +17,12 @@ class Evento private constructor(
     fechaCreacion: String,
     descripcion: String,
     val fecha: String,
-    val ubicacion: String
-) : Actividad(id, fechaCreacion, descripcion) {
+    val ubicacion: String,
+    etiquetas: String
+) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
-        fun creaInstancia(desc: String, fecha: String, ubicacion: String): Evento {
+        fun creaInstancia(desc: String, fecha: String, ubicacion: String, etiquetas: String): Evento {
             require(desc.isNotEmpty()) { "Descripción no puede estar vacía" }
             require(Utils.esFechaValida(fecha)) { "Fecha inválida" }
             require(ubicacion.isNotEmpty()) { "Ubicación no puede estar vacía" }
@@ -31,12 +32,13 @@ class Evento private constructor(
                 fechaActual,
                 desc,
                 fecha,
-                ubicacion
+                ubicacion,
+                etiquetas
             )
         }
     }
 
     override fun obtenerDetalle(): String {
-        return "Evento #$id: $descripcion [Fecha: $fecha, Ubicación: $ubicacion]"
+        return "Evento #$id: $descripcion [Fecha: $fecha, Ubicación: $ubicacion] | [ETIQUETAS: $etiquetas] "
     }
 }
