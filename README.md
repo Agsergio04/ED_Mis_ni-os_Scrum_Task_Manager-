@@ -160,10 +160,15 @@ Gestionar actividades (Tareas/Eventos) en proyectos colaborativos mediante conso
 
 ---
 
-## Responsabilidad 
+## Scrum realizado para implementar los cambios
 
--Rocio : Apatados 5  
--Pablo : Apatados 3 y 4  
--Sergio : Apartados 1 y 2   
--Juan : Apatados 6  
--Alfonso : Apatados 7  
+| ID Historia | Enunciado de la Historia                                       | Estado     | Dimensión / Esfuerzo | Iteración | Prioridad | Comentarios                                                                                         | Desarrollador |
+|-------------|----------------------------------------------------------------|------------|-----------------------|-----------|-----------|----------------------------------------------------------------------------------------------------|----------------|
+| 1001        | Gestión de estados avanzados en tareas                         | Finalizado      | 8/10                  | 5h         | Alta      | Permitir cambiar el estado de tareas (ABIERTA, EN_PROGRESO, FINALIZADA). Validar subtareas abiertas. | Sergio         |
+| 1002        | Asignación de tareas a usuarios                                | Finalizado      | 7/10                  | 4h        | Alta      | Registro de usuarios y asignación de tareas. Consulta de tareas por usuario.                         | Sergio         |
+| 0001        | Etiquetas en actividades                                       | Finalizado      | 7/10                  | 4h         | Media     | Añadir etiquetas separadas por “;” a tareas y eventos. Visualización en listados.                   | Pablo          |
+| 0002        | Filtrado por distintos campos                                  | Finalizado      | 8/10                  | 5h         | Alta      | Filtro por tipo, estado, etiquetas, usuario y fecha.                                                 | Pablo          |
+| 4001        | Gestión de subtareas                                           | Finalizado      | 8/10                  | 6h         | Alta      | Asociación jerárquica de tareas. No se puede cerrar una madre con subtareas abiertas.               | Rocío          |
+| 3001        | Panel de control (Dashboard)                                   | Finalizado      | 6/10                  | 4h         | Media     | Mostrar resumen de tareas y eventos por estado y fechas clave.                                     | Juan           |
+| 2001        | Historial de actividades                                       | Finalizado      | 8/10                  | 5h         | Alta      | Registro de cambios (estado, asignación, cierre) con fecha y descripción por tarea.                 | Alfonso        |
+ 
