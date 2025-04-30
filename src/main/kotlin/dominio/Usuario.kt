@@ -11,9 +11,9 @@ class Usuario (
     companion object{
         private var identificador = 0
 
-        fun incrementarId() : Int{
-            return identificador + 1
+        fun incrementarId(): Int {
+            identificador += 1
+            return identificador
         }
-
     }
 }
