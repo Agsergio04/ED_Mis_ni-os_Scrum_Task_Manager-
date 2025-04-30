@@ -19,9 +19,14 @@ class ActividadService(
 ) {  
 
     fun crearTarea(descripcion: String, etiquetas: String) {
-        val tarea = Tarea.creaInstancia(descripcion, etiquetas)
-        actividadRepo.aniadirActividad(tarea)  
-    }  
+    val tarea = Tarea.creaInstancia(descripcion, etiquetas)
+    actividadRepo.aniadirActividad(tarea)
+    println("Tarea creada con ID: ${tarea.obtenerId()}")
+    historialService.registrarAccion(
+        tarea.obtenerId(),
+        "Tarea creada: \"$descripcion\""
+    )
+}
 
     fun crearEvento(descripcion: String, fecha: String, ubicacion: String, etiquetas: String) {
         val evento = Evento.creaInstancia(descripcion, fecha, ubicacion, etiquetas)
