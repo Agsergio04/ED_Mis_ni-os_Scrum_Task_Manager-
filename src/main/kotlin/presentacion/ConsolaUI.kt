@@ -7,7 +7,7 @@ import org.example.dominio.EstadoTarea
 import org.example.dominio.Evento
 import org.example.dominio.Usuario
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService, dashboardService: DashboardService) {
+class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  
     println("1. Crear nueva actividad")  
@@ -212,7 +212,7 @@ private fun mostrarDashboard() {
     println("\n=== PANEL DE CONTROL ===")
     
     
-    val metricasHoy = servicio.dashboardService.obtenerMetricasHoy()
+    val metricasHoy = dashboardService.obtenerMetricasHoy()
     println("\n📊 ESTADO ACTUAL DE TAREAS:")
     println("  - Abiertas: ${metricasHoy["tareasAbiertas"]}")
     println("  - En progreso: ${metricasHoy["tareasEnProgreso"]}")
@@ -229,7 +229,7 @@ private fun mostrarDashboard() {
     }
     
    
-    val metricasSemana = servicio.dashboardService.obtenerMetricasSemana()
+    val metricasSemana = dashboardService.obtenerMetricasSemana()
     val eventosSemana = metricasSemana["eventosSemana"] as List<Evento>
     println("\n🗓️ EVENTOS ESTA SEMANA (${eventosSemana.size}):")
     eventosSemana.take(3).forEach { 
