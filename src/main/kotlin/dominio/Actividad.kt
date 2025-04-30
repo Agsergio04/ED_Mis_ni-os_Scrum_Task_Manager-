@@ -25,7 +25,7 @@ abstract class Actividad(
     open fun cambiarEstado(estado : EstadoTarea){
         estadoTarea = when(estado){
             EstadoTarea.ABIERTA -> EstadoTarea.EN_PROGRESO
-            EstadoTarea.ACABADA -> EstadoTarea.ABIERTA
+            EstadoTarea.ACABADA -> EstadoTarea.ACABADA
             EstadoTarea.EN_PROGRESO -> EstadoTarea.ACABADA
         }
     }
