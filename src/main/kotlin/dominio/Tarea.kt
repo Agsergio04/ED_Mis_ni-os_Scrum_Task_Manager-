@@ -19,7 +19,7 @@ class Tarea private constructor(
     private var estado: EstadoTarea,
     var usuarioAsignado: Usuario? = null,
     etiquetas: String,
-    private val subtareas: MutableList<Tarea> = mutableListOf()
+    val subtareas: MutableList<Tarea> = mutableListOf()
 ) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
