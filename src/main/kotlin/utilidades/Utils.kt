@@ -5,19 +5,26 @@ import java.time.format.DateTimeFormatter
 
 object Utils {
     fun obtenerFechaActual(): String {
-        val formato = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        return java.time.LocalDate.now().format(formato)
-    }
-    fun esFechaValida(fecha: String): Boolean {
-        return try {
-            java.time.LocalDate.parse(fecha)
-            true
-        } catch (e: Exception) {
-            false
-        }
+        val formato =
+            DateTimeFormatter
+                .ofPattern("yyyy-MM-dd")
+        return LocalDate
+            .now()
+            .format(formato)
     }
 
-    fun compararFecha(fecha: String, filtro: String): Boolean {
+    fun esFechaValida(fecha: String): Boolean =
+        try {
+            LocalDate.parse(fecha)
+            true
+        } catch (_: Exception) {
+            false
+        }
+
+    fun compararFecha(
+        fecha: String,
+        filtro: String,
+    ): Boolean {
         val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val fechaEvento = LocalDate.parse(fecha, formato)
         val hoy = LocalDate.now()

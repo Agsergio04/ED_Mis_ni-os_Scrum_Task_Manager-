@@ -1,9 +1,11 @@
-package org.example.datos  
+@file:Suppress("ktlint:standard:no-trailing-spaces")
 
-import org.example.dominio.Historial  
+package org.example.datos
+
+import org.example.dominio.Historial
 
 interface IHistorialRepository {
     fun agregar(historial: Historial)
-    fun obtenerPorActividad(idActividad: Int): List<Historial>
 
+    fun obtenerPorActividad(idActividad: Int): List<Historial>
 }

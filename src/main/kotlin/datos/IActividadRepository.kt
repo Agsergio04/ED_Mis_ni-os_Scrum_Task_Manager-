@@ -11,10 +11,18 @@ import org.example.dominio.Evento
  */
 interface IActividadRepository {
     fun aniadirActividad(actividad: Actividad)
+
     fun obtenerTodas(): List<Actividad>
+
+    @Suppress("ktlint:standard:blank-line-before-declaration")
     fun obtenerPorId(id: Int): Actividad?
+
     fun contarTareasPorEstado(estado: EstadoTarea): Int
-    fun obtenerEventosEntreFechas(inicio: String, fin: String): List<Evento>
+
+    fun obtenerEventosEntreFechas(
+        inicio: String,
+        fin: String,
+    ): List<Evento>
+
     fun contarTareasConSubtareas(): Int
 }
-
