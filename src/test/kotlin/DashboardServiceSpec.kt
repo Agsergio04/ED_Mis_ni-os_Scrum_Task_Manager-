@@ -8,8 +8,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.example.datos.IActividadRepository
-import org.example.dominio.Evento
 import org.example.dominio.EstadoTarea
+import org.example.dominio.Evento
 import java.time.LocalDate
 
 class DashboardServiceSpec : DescribeSpec({
@@ -29,7 +29,7 @@ class DashboardServiceSpec : DescribeSpec({
                 // Eventos como objetos Evento
                 val eventos = listOf(
                     Evento.creaInstancia("E1", hoy, "Lugar1", "tag"),
-                    Evento.creaInstancia("E2", hoy, "Lugar2", "tag")
+                    Evento.creaInstancia("E2", hoy, "Lugar2", "tag"),
                 )
                 every { actividadRepo.obtenerEventosEntreFechas(hoy, hoy) } returns eventos
                 every { actividadRepo.contarTareasConSubtareas() } returns 4

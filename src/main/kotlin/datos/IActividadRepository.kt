@@ -17,4 +17,3 @@ interface IActividadRepository {
     fun obtenerEventosEntreFechas(inicio: String, fin: String): List<Evento>
     fun contarTareasConSubtareas(): Int
 }
-

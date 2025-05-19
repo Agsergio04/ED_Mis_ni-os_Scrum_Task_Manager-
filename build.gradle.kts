@@ -1,7 +1,20 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
-}
+    kotlin("jvm") version "1.8.0"
+    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
 
+}
+repositories {
+    mavenCentral()
+}
+detekt {
+    config = files("../detekt-config.yml")
+    buildUponDefaultConfig = true
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+    }
+}
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
@@ -12,15 +25,11 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 }
-
 var mockKVersion = "1.13.4"
 
 dependencies {
     testImplementation("io.mockk:mockk:$mockKVersion")
 }
-
-
-
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
@@ -31,23 +40,7 @@ dependencies {
     implementation ("ch.qos.logback:logback-classic:1.2.6")
 
 }
-
-
-tasks.test {
-    useJUnitPlatform()                         // Usa JUnit 5 / Kotest sobre JUnit
-    jvmArgs("-XX:+EnableDynamicAgentLoading")  // Suprime el warning de agentes dinámicos :contentReference[oaicite:0]{index=0}
-}
-
-
-
-tasks.withType<Test> {
-    useJUnitPlatform() // Necesario para Kotest
-}
-
-
 tasks.test {
     useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
 }

@@ -1,7 +1,6 @@
 package org.example.dominio
 
 import org.example.utilidades.Utils
-import org.example.dominio.EstadoTarea
 /**
  * Crea la instancia de una tarea.
  *
@@ -19,7 +18,7 @@ class Tarea private constructor(
     private var estado: EstadoTarea,
     var usuarioAsignado: Usuario? = null,
     etiquetas: String,
-    private val subtareas: MutableList<Tarea> = mutableListOf()
+    private val subtareas: MutableList<Tarea> = mutableListOf(),
 ) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
@@ -31,7 +30,7 @@ class Tarea private constructor(
                 fechaActual,
                 desc,
                 EstadoTarea.ABIERTA,
-                etiquetas = etiquetas
+                etiquetas = etiquetas,
             )
         }
     }
@@ -48,7 +47,7 @@ class Tarea private constructor(
         }
         super.cambiarEstado(estado)
     }
-    
+
     override fun obtenerDetalle(): String {
         val asignado = usuarioAsignado?.let { " - Asignado a: ${it.nombre}" } ?: ""
         return "Tarea #$id: $descripcion [Estado: ${estado.name}]$asignado | [ETIQUETAS: $etiquetas] "

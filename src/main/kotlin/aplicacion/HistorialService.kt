@@ -1,8 +1,8 @@
-package org.example.aplicacion  
+package org.example.aplicacion
 
 import org.example.datos.IHistorialRepository
 import org.example.dominio.Historial
-import org.example.utilidades.Utils  
+import org.example.utilidades.Utils
 
 class HistorialService(private val repo: IHistorialRepository) {
     fun registrarAccion(idActividad: Int, accion: String) {
@@ -10,8 +10,8 @@ class HistorialService(private val repo: IHistorialRepository) {
             Historial(
                 fecha = Utils.obtenerFechaActual(),
                 descripcion = accion,
-                idActividad = idActividad
-            )
+                idActividad = idActividad,
+            ),
         )
     }
 

@@ -18,7 +18,7 @@ class Evento private constructor(
     descripcion: String,
     val fecha: String,
     val ubicacion: String,
-    etiquetas: String
+    etiquetas: String,
 ) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
@@ -33,7 +33,7 @@ class Evento private constructor(
                 desc,
                 fecha,
                 ubicacion,
-                etiquetas
+                etiquetas,
             )
         }
     }

@@ -13,17 +13,17 @@ abstract class Actividad(
     private val fechaCreacion: String,
     protected val descripcion: String,
     val etiquetas: String,
-    var estadoTarea : EstadoTarea = EstadoTarea.ABIERTA
+    var estadoTarea: EstadoTarea = EstadoTarea.ABIERTA,
 
-)  {
+) {
     abstract fun obtenerDetalle(): String
 
-    fun obtenerId() : Int{
+    fun obtenerId(): Int {
         return id
     }
 
-    open fun cambiarEstado(estado : EstadoTarea){
-        estadoTarea = when(estado){
+    open fun cambiarEstado(estado: EstadoTarea) {
+        estadoTarea = when (estado) {
             EstadoTarea.ABIERTA -> EstadoTarea.EN_PROGRESO
             EstadoTarea.ACABADA -> EstadoTarea.ABIERTA
             EstadoTarea.EN_PROGRESO -> EstadoTarea.ACABADA

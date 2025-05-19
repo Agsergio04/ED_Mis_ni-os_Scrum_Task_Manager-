@@ -1,14 +1,14 @@
 package org.example.dominio
 
-class Usuario (
-    val nombre : String,
-    private val id : Int = incrementarId()
+class Usuario(
+    val nombre: String,
+    private val id: Int = incrementarId(),
 ) {
-    fun obtenerId() : Int{
+    fun obtenerId(): Int {
         return id
     }
 
-    companion object{
+    companion object {
         private var identificador = 0
 
         fun incrementarId(): Int {

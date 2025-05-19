@@ -1,10 +1,9 @@
-package org.example.datos  
+package org.example.datos
 
-import org.example.dominio.Historial  
+import org.example.dominio.Historial
 
 class HistorialRepository : IHistorialRepository {
     private val registros = mutableListOf<Historial>()
-
 
     override fun agregar(historial: Historial) {
         registros.add(historial)

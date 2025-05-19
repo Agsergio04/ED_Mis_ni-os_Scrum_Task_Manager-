@@ -1,9 +1,8 @@
-package org.example.datos  
+package org.example.datos
 
-import org.example.dominio.Historial  
+import org.example.dominio.Historial
 
 interface IHistorialRepository {
     fun agregar(historial: Historial)
     fun obtenerPorActividad(idActividad: Int): List<Historial>
-
 }

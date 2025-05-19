@@ -2,7 +2,6 @@ package org.example.datos
 
 import org.example.dominio.Usuario
 
-
 class UsuarioRepository : IUsuarioRepository {
     private val usuarios = mutableListOf<Usuario>()
 
