@@ -1,6 +1,23 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
+    kotlin("jvm") version "1.8.0"                  // plugin Kotlin
+    id("org.jlleitschuh.gradle.ktlint") version "12.2.0" // plugin ktlint
 }
+
+repositories {
+    mavenCentral()
+}
+
+ktlint {
+    version.set("0.49.1")
+    outputToConsole.set(true)
+    ignoreFailures.set(false)
+    android.set(false)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+}
+
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -9,9 +26,12 @@ repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
     testImplementation(kotlin("test"))
 }
+
 
 var mockKVersion = "1.13.4"
 
