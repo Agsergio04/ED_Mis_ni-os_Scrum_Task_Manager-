@@ -7,12 +7,11 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    google()
-    gradlePluginPortal()
 }
 
 dependencies {
     testImplementation(kotlin("test"))
+    ktlint("com.pinterest:ktlint:0.49.0")
 }
 
 tasks.test {
