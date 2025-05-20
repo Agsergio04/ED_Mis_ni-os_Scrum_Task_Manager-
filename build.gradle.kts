@@ -7,13 +7,8 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://company/com/maven2")
-    }
-    mavenLocal()
-    flatDir {
-        dirs("libs")
-    }
+    google()
+    gradlePluginPortal()
 }
 
 dependencies {
