@@ -89,7 +89,7 @@ se subdivido la funcion en funciones mas simples por motivos de legibilidad y re
 -2.a Describe el proceso que sigues para asegurarte que la refactorización no afecta a código que ya tenias desarrollado.
 
 Para asegurar de que la refactorizacion no afecta a la estructura del proyecto me asegure de hacer pruebas unitarias mediante mockk  
-Siendo estos los resultados:
+Siendo estos los resultados:  
 ![Pruebas Unitarias](Imagenes/hola.png)
 
 ### [3]
