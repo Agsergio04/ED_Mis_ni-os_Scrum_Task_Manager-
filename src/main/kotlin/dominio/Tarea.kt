@@ -1,7 +1,7 @@
 package org.example.dominio
 
 import org.example.utilidades.Utils
-import org.example.dominio.EstadoTarea
+
 /**
  * Crea la instancia de una tarea.
  *
@@ -19,7 +19,7 @@ class Tarea private constructor(
     private var estado: EstadoTarea,
     var usuarioAsignado: Usuario? = null,
     etiquetas: String,
-    private val subtareas: MutableList<Tarea> = mutableListOf()
+    internal val subtareas: MutableList<Tarea> = mutableListOf()
 ) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
@@ -43,12 +43,19 @@ class Tarea private constructor(
     fun obtenerSubtareas(): List<Tarea> = subtareas
 
     override fun cambiarEstado(estado: EstadoTarea) {
-        if (estado == EstadoTarea.ACABADA && subtareas.any { it.estadoTarea != EstadoTarea.ACABADA }) {
-            throw IllegalStateException("No se puede cerrar la tarea madre con subtareas abiertas")
-        }
-        super.cambiarEstado(estado)
+        if (estado == EstadoTarea.ACABADA) validarSubtareas()
+        estadoTarea = estado
     }
-    
+
+    fun validarSubtareas() {
+        if (subtareas.any { it.estadoTarea != EstadoTarea.ACABADA }) {
+            throw IllegalStateException("Subtareas abiertas")
+        }
+    }
+
+
+
+
     override fun obtenerDetalle(): String {
         val asignado = usuarioAsignado?.let { " - Asignado a: ${it.nombre}" } ?: ""
         return "Tarea #$id: $descripcion [Estado: ${estado.name}]$asignado | [ETIQUETAS: $etiquetas] "

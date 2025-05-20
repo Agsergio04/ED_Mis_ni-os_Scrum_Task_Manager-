@@ -2,10 +2,8 @@ package org.example.presentacion
 
 import DashboardService
 import org.example.aplicacion.ActividadService
-import org.example.dominio.Actividad
 import org.example.dominio.EstadoTarea
 import org.example.dominio.Evento
-import org.example.dominio.Usuario
 import java.util.*
 class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
     private fun mostrarMenu() {  
@@ -246,6 +244,16 @@ private fun mostrarDashboard() {
     leerCadena()
     }
 
+    private fun mostrarMetricasTareas(metricas: Map<String, Any>) {
+        println("📊 TAREAS:")
+        println("  - Abiertas: ${metricas["tareasAbiertas"]}")
+        println("  - En progreso: ${metricas["tareasEnProgreso"]}")
+    }
+
+    private fun mostrarEventos(eventos: List<Evento>, titulo: String) {
+        println("\n📅 $titulo (${eventos.size}):")
+        eventos.take(3).forEach { println("  - ${it.obtenerDetalle()}") }
+    }
 
     fun mostrarMenuFiltrado() {
         println("=== FILTRO DE ACTIVIDADES ===")
