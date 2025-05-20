@@ -1,76 +1,81 @@
 ## Descripción de Code Smells y Patrones de Refactorización
 
 ### Code Smells Detectados
-1. **Lógica de Filtrado Incorrecta**  
-   - **Archivo**: `ActividadService.kt`  
-   - **Descripción**: En `filtrarActividades`, la búsqueda de usuarios por nombre usaba `it.nombre.equals(it)` en lugar de comparar con `nombreUsuario`.  
-   - **Patrón aplicado**: _Extracción de Método_ para separar condiciones de filtrado.
+## 1. Detección de code smells
 
-2. **Manejo Inseguro de Estado Estático**  
-   - **Archivo**: `Usuario.kt`  
-   - **Descripción**: El ID se incrementaba estáticamente, lo que podría causar conflictos en entornos multihilo.  
-   - **Patrón aplicado**: _Reemplazar Método con Método de Objeto_ para generar IDs de forma segura.
+A continuación se describen al menos cinco code smells identificados mediante análisis manual y con la ayuda de un linter (por ejemplo, Detekt en Kotlin):
 
-3. **Switch Statement Complejo**  
-   - **Archivo**: `Actividad.kt`  
-   - **Descripción**: El método `cambiarEstado` usaba un `when` con lógica redundante.  
-   - **Patrón aplicado**: _Reemplazar Condicional con Polimorfismo_ mediante una máquina de estados.
+1. **Large Class** en `ActividadRepository.kt`:  
+   La clase acumula múltiples responsabilidades (gestión de tareas y eventos) y métodos de conteo/filtrado.  
 
-4. **Parámetros Excesivos**  
-   - **Archivo**: `ActividadService.kt`  
-   - **Descripción**: El método `filtrarActividades` tenía 5 parámetros.  
-   - **Patrón aplicado**: _Introducir Parámetro Objeto_ (clase `FiltroActividad`).
+2. **Long Method** en métodos de conteo (p.ej., `contarTareasPorEstado`) y filtrado (`obtenerEventosEntreFechas`):  
+   La lógica de filtrado y conteo podría extraerse en métodos auxiliares para mejorar legibilidad.
+   
+3. **Feature Envy** en `contarTareasConSubtareas`:  
+   El repositorio accede a detalles internos de `Tarea` (lista de subtareas) en lugar de delegar la lógica a la clase `Tarea`.  
+   
 
-5. **Validación de Fecha Acoplada**  
-   - **Archivo**: `Evento.kt`  
-   - **Descripción**: La validación `Utils.esFechaValida(fecha)` dependía de una clase externa.  
-   - **Patrón aplicado**: _Extraer Interfaz_ para desacoplar validaciones.
+4. **Primitive Obsession** en el uso de `String` para fechas (`inicio: String`, `fin: String`):  
+   Se deberían usar tipos más adecuados (por ejemplo, `LocalDate`) para evitar parsing/formatos dispersos.  
+   
+
+5. **Duplicate Code** en filtrados de actividades (varios `.filterIsInstance<>()` y comparaciones de fecha):  
+   Patrón repetido en diferentes métodos, derivando en código redundante.  
+ 
+
+
+## 2. Patrones de refactorización aplicados
+
+Se han seleccionado y aplicado tres patrones de refactorización distintos mediante la funcionalidad del IDE (Refactor > ...):
+
+### 2.1. Extracción de Método (Extract Method)
+
+- **Objetivo:** Separar la lógica de filtrado de actividades en métodos privados para `Tarea` y `Evento`.  
+- **Antes:** Lógica inline en `contarTareasPorEstado` y `obtenerEventosEntreFechas`.  
+- **Después:** Métodos privados `filtrarTareasPorEstado(estado: EstadoTarea)` y `filtrarEventosEntre(inicio: LocalDate, fin: LocalDate)`.  
+- **Commit:** [commit-refactor-extract-method]
+
+### 2.2. Introducir Objeto Parámetro (Introduce Parameter Object)
+
+- **Objetivo:** Reemplazar los parámetros `inicio: String` y `fin: String` por un objeto `RangoFechas` que encapsula dos `LocalDate`.  
+- **Antes:** Métodos `obtenerEventosEntreFechas(inicio: String, fin: String)` en `IActividadRepository`.  
+- **Después:** `obtenerEventosEntreFechas(rango: RangoFechas)` con validación centralizada de rangos.  
+- **Commit:** [commit-refactor-introduce-parameter-object]
+
+### 2.3. Simplificar Condicional (Simplify Conditional)
+
+- **Objetivo:** Reducir la complejidad de condiciones en conteo de subtareas.  
+- **Antes:** `count { it.obtenerSubtareas().isNotEmpty() }`.  
+- **Después:** Delegar a método `tieneSubtareas()` dentro de `Tarea`, reemplazando la condición por `count { it.tieneSubtareas() }`.  
+- **Commit:** [commit-refactor-simplify-conditional]
 
 ---
 
 ## Pruebas Unitarias Asociadas
 
-| **Clase de Test**           | **Método de Test**                          | **Cubre Refactorización**          |
-|-----------------------------|--------------------------------------------|-----------------------------------|
-| `ActividadServiceTest`      | `filtrarActividades_porUsuario_retornaTareas` | Introducir Parámetro Objeto       |
-| `UsuarioTest`               | `crearUsuario_generaIdUnico`               | Reemplazar Método con Método de Objeto |
-| `ActividadTest`             | `cambiarEstado_ABIERTA_a_EN_PROGRESO`      | Reemplazar Condicional con Polimorfismo |
-| `EventoTest`                | `crearEvento_conFechaInvalida_lanzaExcepcion` | Extraer Interfaz                  |
+| Bloque (`describe`)                  | Caso de prueba (`it`)                                           | Acción realizada                                                | Resultado esperado                                         |
+|--------------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------|------------------------------------------------------------|
+| **añadirActividad**                  | debe agregar una actividad a la lista                           | Se llama a `repo.aniadirActividad(tarea)`                       | Verifica que `aniadirActividad(tarea)` fue invocado       |
+| **obtenerPorId**                     | debe retornar la actividad correcta si existe                   | Se simula `repo.obtenerPorId(any())` devolviendo `tarea`; luego se invoca con `1` | Devuelve el objeto `tarea`                                  |
+| **obtenerPorId**                     | debe retornar null si no existe                                 | Se simula `repo.obtenerPorId(any())` devolviendo `null`; luego se invoca con `999` | Devuelve `null`                                            |
+| **contarTareasPorEstado**           | debe contar tareas en estado ABIERTA                            | Se simula `repo.contarTareasPorEstado(EstadoTarea.ABIERTA)` devolviendo `3`; luego se invoca con `ABIERTA` | Devuelve `3`                                              |
+| **obtenerEventosEntreFechas**        | debe filtrar eventos entre fechas                               | Se simula `repo.obtenerEventosEntreFechas("2025-01-01","2025-12-31")` devolviendo `[evento]`; luego se invoca con ese rango | Devuelve lista conteniendo solo `evento`                  |
+| **obtenerTodas**                     | debe retornar todas las actividades                             | Se simula `repo.obtenerTodas()` devolviendo `[tarea, evento]`; luego se invoca `repo.obtenerTodas()` | Devuelve lista con `[tarea, evento]`                       |
+
 
 ---
+
+### Prueba de depuracion
+![Pruebas Unitarias](Imagenes/.png)
 
 ## Respuestas a las Preguntas
 
 ### [1]
-**1.a**  
-Se aplicaron:  
-- Extracción de Método (`filtrarActividades`).  
-- Reemplazar Método con Método de Objeto (`Usuario.kt`).  
-- Introducir Parámetro Objeto (`FiltroActividad`).  
-- Reemplazar Condicional con Polimorfismo (`cambiarEstado`).  
-- Extraer Interfaz (validación de fechas).  
+-1.a ¿Qué code smell y patrones de refactorización has aplicado?  
+Los patrones a refactorizacion utilizados fueron mediante la funcionalidad del IDE,subdividiendo las funciones habidas (en la medida de lo posible) para una mejor lectura y comprension  
 
-**1.b**  
-**Patrón**: _Introducir Parámetro Objeto_ en `filtrarActividades`.  
-**Mejora**: Reduce la complejidad del método y facilita añadir nuevos filtros.  
-**Prueba**: `filtrarActividades_porUsuario_retornaTareas` ([código](https://github.com/.../ActividadServiceTest.kt#L45)).  
-
----
-
+-1.b Teniendo en cuenta aquella funcionalidad que tiene pruebas unitarias, selecciona un patrón de refactorización de los que has aplicado y que están cubierto por los test unitarios. ¿Porque mejora o no mejora tu código? Asegurate de poner enlaces a tu código
 ### [2]
-**2.a**  
-Proceso para asegurar la no regresión:  
-1. Ejecutar pruebas existentes antes de refactorizar.  
-2. Usar la herramienta _Refactor > Rename_ del IDE para cambios de nombres.  
-3. Validar con pruebas unitarias después de cada cambio.  
-4. Aprovechar el análisis estático del IDE (p.ej., inspecciones de IntelliJ).  
-
----
-
+-2.a Describe el proceso que sigues para asegurarte que la refactorización no afecta a código que ya tenias desarrollado.
 ### [3]
-**3.a**  
-**Funcionalidad del IDE usada**:  
-- _Refactor > Extract > Parameter Object_ para crear `FiltroActividad`.  
-- _Refactor > Extract Method_ en las condiciones de `filtrarActividades`.  
-
-**Captura**:   
+-3.a ¿Que funcionalidad del IDE has usado para aplicar la refactorización seleccionada? Si es necesario, añade capturas de pantalla para identificar la funcionalidad.
