@@ -65,14 +65,14 @@ La facilidad de organizar tu codigo
 - Desactivar reglas especificas por medio de .editorconfig  
 - Permitir o prohibir wildcard imports (*)  
 - Ajustar el tamaño de las tabulaciones   
-3.b De esas posibilidades de configuración, ¿cuál has configurado para que sea distinta a la que viene por defecto?
-- Niguan la verdad,queria que fuese la predefinida del ktlint      
-3.c Pon un ejemplo de como ha impactado en tu código, enlazando al código anterior al cambio, y al posterior al cambio
--Antes:
-![Problema2](imagenes/codigo_a_corregir2.png)
--Despues:
-![Solucion2](imagenes/codigo_corregido(2).png)  
-[4]  
+3.b De esas posibilidades de configuración, ¿cuál has configurado para que sea distinta a la que viene por defecto?  
+- Niguan la verdad,queria que fuese la predefinida del ktlint        
+3.c Pon un ejemplo de como ha impactado en tu código, enlazando al código anterior al cambio, y al posterior al cambio  
+-Antes:  
+![Problema2](imagenes/codigo_a_corregir2.png)  
+-Despues:  
+![Solucion2](imagenes/codigo_corregido(2).png)      
+[4]    
 4 ¿Qué conclusiones sacas después del uso de estas herramientas?  
 Que es una herramienta practica a la hora de la organizacion del codigo y la implementacion de buenas practicas de programacion
 ---
