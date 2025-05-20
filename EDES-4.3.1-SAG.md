@@ -72,8 +72,8 @@ La facilidad de organizar tu codigo
 ![Problema2](imagenes/codigo_a_corregir2.png)  
 -Despues:  
 ![Solucion2](imagenes/codigo_corregido(2).png)      
-[4]    
-4 ¿Qué conclusiones sacas después del uso de estas herramientas?  
+## [4]    
+### 4 ¿Qué conclusiones sacas después del uso de estas herramientas?  
 Que es una herramienta practica a la hora de la organizacion del codigo y la implementacion de buenas practicas de programacion
 ---
 
