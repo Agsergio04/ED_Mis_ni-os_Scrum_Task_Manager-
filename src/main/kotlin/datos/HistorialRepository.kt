@@ -2,8 +2,6 @@ package org.example.datos
 
 import org.example.dominio.Historial
 
-@Suppress("ktlint:standard:class-signature")
-
 class HistorialRepository : IHistorialRepository {
     private val registros = mutableListOf<Historial>()
 
@@ -11,7 +9,5 @@ class HistorialRepository : IHistorialRepository {
         registros.add(historial)
     }
 
-    override fun obtenerPorActividad(idActividad: Int): List<Historial> {
-        return registros.filter { it.idActividad == idActividad }
-    }
+    override fun obtenerPorActividad(idActividad: Int): List<Historial> = registros.filter { it.idActividad == idActividad }
 }

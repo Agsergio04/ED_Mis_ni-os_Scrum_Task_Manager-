@@ -1,7 +1,4 @@
-@file:Suppress("ktlint:standard:no-wildcard-imports")
-
 package org.example.aplicacion
-
 import DashboardService
 import org.example.datos.IActividadRepository
 import org.example.datos.IUsuarioRepository
