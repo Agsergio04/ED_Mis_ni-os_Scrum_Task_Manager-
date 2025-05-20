@@ -1,6 +1,21 @@
 plugins {
     kotlin("jvm") version "2.0.21"
+    id("io.gitlab.arturbosch.detekt") version "1.23.6"
 }
+
+detekt {
+    toolVersion = "1.23.6"
+    config.setFrom(files("config/detekt.yml"))
+    buildUponDefaultConfig = true
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
