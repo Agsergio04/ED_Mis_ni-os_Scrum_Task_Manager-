@@ -2,6 +2,8 @@ package org.example.datos
 
 import org.example.dominio.Historial
 
+@Suppress("ktlint:standard:class-signature")
+
 class HistorialRepository : IHistorialRepository {
     private val registros = mutableListOf<Historial>()
 

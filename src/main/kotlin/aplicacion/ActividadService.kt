@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:no-wildcard-imports")
+
 package org.example.aplicacion
 
 import DashboardService
@@ -16,8 +18,10 @@ class ActividadService(
     private val historialService: HistorialService,
     val dashboardService: DashboardService,
 ) {
-
-    fun crearTarea(descripcion: String, etiquetas: String) {
+    fun crearTarea(
+        descripcion: String,
+        etiquetas: String,
+    ) {
         val tarea = Tarea.creaInstancia(descripcion, etiquetas)
         actividadRepo.aniadirActividad(tarea)
         println("Tarea creada con ID: ${tarea.obtenerId()}")
@@ -27,20 +31,24 @@ class ActividadService(
         )
     }
 
-    fun crearEvento(descripcion: String, fecha: String, ubicacion: String, etiquetas: String) {
+    fun crearEvento(
+        descripcion: String,
+        fecha: String,
+        ubicacion: String,
+        etiquetas: String,
+    ) {
         val evento = Evento.creaInstancia(descripcion, fecha, ubicacion, etiquetas)
         actividadRepo.aniadirActividad(evento)
     }
 
-    fun listarActividades(): List<Actividad> {
-        return actividadRepo.obtenerTodas()
-    }
+    fun listarActividades(): List<Actividad> = actividadRepo.obtenerTodas()
 
-    fun listarUsuarios(): List<Usuario> {
-        return usuarioRepo.obtenerTodos()
-    }
+    fun listarUsuarios(): List<Usuario> = usuarioRepo.obtenerTodos()
 
-    fun cambiarEstadoTarea(id: Int, nuevoEstado: EstadoTarea) {
+    fun cambiarEstadoTarea(
+        id: Int,
+        nuevoEstado: EstadoTarea,
+    ) {
         val actividad = actividadRepo.obtenerPorId(id)
         if (actividad is Tarea) {
             val estadoAnterior = actividad.estadoTarea.name
@@ -51,11 +59,12 @@ class ActividadService(
         }
     }
 
-    fun crearUsuario(nombre: String): Usuario {
-        return usuarioRepo.crearUsuario(nombre)
-    }
+    fun crearUsuario(nombre: String): Usuario = usuarioRepo.crearUsuario(nombre)
 
-    fun asignarTarea(idTarea: Int, idUsuario: Int) {
+    fun asignarTarea(
+        idTarea: Int,
+        idUsuario: Int,
+    ) {
         val tarea = actividadRepo.obtenerPorId(idTarea) as? Tarea
         val usuario = usuarioRepo.obtenerPorId(idUsuario)
 
@@ -66,17 +75,18 @@ class ActividadService(
         historialService.registrarAccion(idTarea, "Asignada al usuario #${usuario.obtenerId()}")
     }
 
-    fun obtenerTareasPorUsuario(idUsuario: Int): List<Tarea> {
-        return actividadRepo.obtenerTodas()
+    fun obtenerTareasPorUsuario(idUsuario: Int): List<Tarea> =
+        actividadRepo
+            .obtenerTodas()
             .filterIsInstance<Tarea>()
             .filter { it.usuarioAsignado?.obtenerId() == idUsuario }
-    }
 
-    fun obtenerHistorial(idActividad: Int): List<Historial> {
-        return historialService.obtenerHistorial(idActividad)
-    }
+    fun obtenerHistorial(idActividad: Int): List<Historial> = historialService.obtenerHistorial(idActividad)
 
-    fun asociarSubtarea(idMadre: Int, idHija: Int) {
+    fun asociarSubtarea(
+        idMadre: Int,
+        idHija: Int,
+    ) {
         val tareaMadre = actividadRepo.obtenerPorId(idMadre) as? Tarea ?: throw IllegalArgumentException("Tarea madre no encontrada")
         val tareaHija = actividadRepo.obtenerPorId(idHija) as? Tarea ?: throw IllegalArgumentException("Tarea hija no encontrada")
         tareaMadre.agregarSubtarea(tareaHija)
@@ -93,36 +103,41 @@ class ActividadService(
         val actividades = listarActividades()
         val usuarios = listarUsuarios()
 
-        val usuario = nombreUsuario?.let {
-            usuarios.find { it.nombre.equals(it) }
-        }
+        val usuario =
+            nombreUsuario?.let {
+                usuarios.find { it.nombre.equals(it) }
+            }
 
         return actividades.filter { act ->
-            val coincideTipo = when (tipo?.uppercase()) {
-                "TAREA" -> act is Tarea
-                "EVENTO" -> act is Evento
-                else -> true
-            }
+            val coincideTipo =
+                when (tipo?.uppercase()) {
+                    "TAREA" -> act is Tarea
+                    "EVENTO" -> act is Evento
+                    else -> true
+                }
 
-            val coincideEstado = if (estado != null && act is Tarea) {
-                act.estadoTarea == estado
-            } else {
-                true // Si no se especifica estado, lo dejamos pasar
-            }
+            val coincideEstado =
+                if (estado != null && act is Tarea) {
+                    act.estadoTarea == estado
+                } else {
+                    true // Si no se especifica estado, lo dejamos pasar
+                }
 
             val coincideEtiquetas = etiquetas?.all { tag -> act.etiquetas.contains(tag) } ?: true
 
-            val coincideUsuario = if (usuario != null && act is Tarea) {
-                act.usuarioAsignado == usuario
-            } else {
-                true
-            }
+            val coincideUsuario =
+                if (usuario != null && act is Tarea) {
+                    act.usuarioAsignado == usuario
+                } else {
+                    true
+                }
 
-            val coincideFecha = if (fechaFiltro != null && act is Evento) {
-                Utils.compararFecha(act.fecha, fechaFiltro)
-            } else {
-                true
-            }
+            val coincideFecha =
+                if (fechaFiltro != null && act is Evento) {
+                    Utils.compararFecha(act.fecha, fechaFiltro)
+                } else {
+                    true
+                }
 
             coincideTipo && coincideEstado && coincideEtiquetas && coincideUsuario && coincideFecha
         }

@@ -5,7 +5,11 @@ import org.example.aplicacion.ActividadService
 import org.example.dominio.EstadoTarea
 import org.example.dominio.Evento
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
+
+class ConsolaUI(
+    private val servicio: ActividadService,
+    private val dashboardService: DashboardService,
+) {
     private fun mostrarMenu() {
         println("\n=== GESTOR DE ACTIVIDADES ===")
         println("1. Crear nueva actividad")
@@ -120,6 +124,7 @@ class ConsolaUI(private val servicio: ActividadService, private val dashboardSer
             else -> println("Opción no válida")
         }
     }
+
     private fun crearTarea() {
         try {
             print("Descripción de la tarea: ")
@@ -132,6 +137,7 @@ class ConsolaUI(private val servicio: ActividadService, private val dashboardSer
             println("Error: ${e.message}")
         }
     }
+
     private fun crearEvento() {
         try {
             print("Descripción del evento: ")
@@ -148,6 +154,7 @@ class ConsolaUI(private val servicio: ActividadService, private val dashboardSer
             println("Error: ${e.message}")
         }
     }
+
     private fun listarActividades() {
         val actividades = servicio.listarActividades()
         if (actividades.isEmpty()) {
@@ -157,16 +164,15 @@ class ConsolaUI(private val servicio: ActividadService, private val dashboardSer
         println("\n=== LISTADO DE ACTIVIDADES ===")
         actividades.forEach { println(it) }
     }
-    private fun leerOpcion(): Int {
-        return try {
+
+    private fun leerOpcion(): Int =
+        try {
             Scanner(System.`in`).nextInt()
         } catch (e: Exception) {
             -1
         }
-    }
-    private fun leerCadena(): String {
-        return Scanner(System.`in`).nextLine().trim()
-    }
+
+    private fun leerCadena(): String = Scanner(System.`in`).nextLine().trim()
 
     private fun verHistorial() {
         try {
@@ -245,33 +251,41 @@ class ConsolaUI(private val servicio: ActividadService, private val dashboardSer
         if (tipo.equals("Tarea", ignoreCase = true)) {
             println("Filtrar por estado (ABIERTA / EN_PROGRESO / FINALIZADA / ninguno): ")
             val estadoInput = readLine()?.trim()?.uppercase()
-            estado = try {
-                EstadoTarea.valueOf(estadoInput ?: "")
-            } catch (e: Exception) {
-                null
-            }
+            estado =
+                try {
+                    EstadoTarea.valueOf(estadoInput ?: "")
+                } catch (e: Exception) {
+                    null
+                }
         }
 
         println("Filtrar por etiquetas (separadas por ; o vacío para omitir): ")
         val etiquetasInput = readLine()?.trim()
-        val etiquetas = etiquetasInput?.split(";")?.map { it.trim() }?.filter { it.isNotEmpty() }?.takeIf { it.isNotEmpty() }
+        val etiquetas =
+            etiquetasInput
+                ?.split(";")
+                ?.map { it.trim() }
+                ?.filter { it.isNotEmpty() }
+                ?.takeIf { it.isNotEmpty() }
 
         println("Filtrar por usuario asignado (nombre o vacío): ")
         val nombreUsuario = readLine()?.trim()
 
         println("Filtrar por fecha (HOY / MAÑANA / SEMANA / MES / ninguno): ")
-        val fechaFiltro = readLine()?.trim()?.uppercase()?.takeIf {
-            listOf("HOY", "MAÑANA", "SEMANA", "MES").contains(it)
-        }
+        val fechaFiltro =
+            readLine()?.trim()?.uppercase()?.takeIf {
+                listOf("HOY", "MAÑANA", "SEMANA", "MES").contains(it)
+            }
 
         // Llamamos a la función de filtrar actividades desde el servicio
-        val filtradas = servicio.filtrarActividades(
-            tipo = tipo,
-            estado = estado,
-            etiquetas = etiquetas,
-            nombreUsuario = nombreUsuario,
-            fechaFiltro = fechaFiltro,
-        )
+        val filtradas =
+            servicio.filtrarActividades(
+                tipo = tipo,
+                estado = estado,
+                etiquetas = etiquetas,
+                nombreUsuario = nombreUsuario,
+                fechaFiltro = fechaFiltro,
+            )
 
         println("Actividades filtradas: ${filtradas.size}")
         filtradas.forEach { println(it.obtenerDetalle()) }

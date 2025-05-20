@@ -1,6 +1,7 @@
 package org.example.dominio
 
 import org.example.utilidades.Utils
+
 /**
  * Crea la instancia de un evento.
  *
@@ -20,9 +21,13 @@ class Evento private constructor(
     val ubicacion: String,
     etiquetas: String,
 ) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
-
     companion object {
-        fun creaInstancia(desc: String, fecha: String, ubicacion: String, etiquetas: String): Evento {
+        fun creaInstancia(
+            desc: String,
+            fecha: String,
+            ubicacion: String,
+            etiquetas: String,
+        ): Evento {
             require(desc.isNotEmpty()) { "Descripción no puede estar vacía" }
             require(Utils.esFechaValida(fecha)) { "Fecha inválida" }
             require(ubicacion.isNotEmpty()) { "Ubicación no puede estar vacía" }
@@ -38,7 +43,5 @@ class Evento private constructor(
         }
     }
 
-    override fun obtenerDetalle(): String {
-        return "Evento #$id: $descripcion [Fecha: $fecha, Ubicación: $ubicacion] | [ETIQUETAS: $etiquetas] "
-    }
+    override fun obtenerDetalle(): String = "Evento #$id: $descripcion [Fecha: $fecha, Ubicación: $ubicacion] | [ETIQUETAS: $etiquetas] "
 }

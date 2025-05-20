@@ -14,11 +14,13 @@ fun main() {
     val historialRepo = HistorialRepository()
     val historialService = HistorialService(historialRepo)
     val dashboardService = DashboardService(actividadRepo)
-    val servicio = ActividadService(
-        actividadRepo = actividadRepo,
-        usuarioRepo = usuarioRepo,
-        historialService = historialService,
-        dashboardService = dashboardService,
-    )
+    val servicio =
+        @Suppress("ktlint:standard:multiline-expression-wrapping")
+        ActividadService(
+            actividadRepo = actividadRepo,
+            usuarioRepo = usuarioRepo,
+            historialService = historialService,
+            dashboardService = dashboardService,
+        )
     ConsolaUI(servicio, dashboardService).iniciar()
 }

@@ -1,3 +1,4 @@
+
 import org.example.datos.IActividadRepository
 import org.example.dominio.EstadoTarea
 import org.example.utilidades.Utils
@@ -20,10 +21,11 @@ class DashboardService(
         val hoy = java.time.LocalDate.parse(Utils.obtenerFechaActual())
         val finSemana = hoy.plusDays(7).toString()
         return mapOf(
-            "eventosSemana" to actividadRepo.obtenerEventosEntreFechas(
-                hoy.toString(),
-                finSemana,
-            ),
+            "eventosSemana" to
+                actividadRepo.obtenerEventosEntreFechas(
+                    hoy.toString(),
+                    finSemana,
+                ),
         )
     }
 }
