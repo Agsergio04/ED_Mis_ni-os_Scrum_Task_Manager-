@@ -1,7 +1,37 @@
 plugins {
     kotlin("jvm") version "2.0.21"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
+    id("org.jetbrains.dokka") version "2.0.0"
+
+
 }
+
+dokka {
+    moduleName.set("Project Name")
+    dokkaPublications.html {
+        suppressInheritedMembers.set(true)
+        failOnWarning.set(true)
+    }
+    dokkaSourceSets.main {
+        includes.from("README.md")
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://example.com/src")
+            remoteLineSuffix.set("#L")
+        }
+    }
+    pluginsConfiguration.html {
+        customStyleSheets.from("styles.css")
+        customAssets.from("logo.png")
+        footerMessage.set("(c) Your Company")
+    }
+}
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(buildDir.resolve("dokka"))
+    moduleName.set("TaskManager")
+}
+
 
 detekt {
     toolVersion = "1.23.6"
@@ -9,12 +39,19 @@ detekt {
     buildUponDefaultConfig = true
 }
 
+subprojects {
+    apply(plugin = "org.jetbrains.dokka")
+}
+
+
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     reports {
         html.required.set(true)
         xml.required.set(false)
     }
 }
+
+
 
 
 group = "org.example"
