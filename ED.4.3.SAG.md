@@ -73,7 +73,25 @@ Se han seleccionado y aplicado tres patrones de refactorización distintos media
 Los patrones a refactorizacion utilizados fueron mediante la funcionalidad del IDE,subdividiendo las funciones habidas (en la medida de lo posible) para una mejor lectura y comprension  
 
 -1.b Teniendo en cuenta aquella funcionalidad que tiene pruebas unitarias, selecciona un patrón de refactorización de los que has aplicado y que están cubierto por los test unitarios. ¿Porque mejora o no mejora tu código? Asegurate de poner enlaces a tu código
+
+-Antes
+```kotlin
+fun contarTareasPorEstado(estado: EstadoTarea): Int {
+    return actividades.filterIsInstance<Tarea>()
+                     .count { it.estado == estado && it.subtareas.any() }
+}
+```
+-Ahora
+https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/blob/e67eff866532ec28a20d5645c31510d5ec3d249c/src/main/kotlin/datos/ActividadRepository.kt#L23-L35
+
+se subdivido la funcion en funciones mas simples por motivos de legibilidad y reutilizacion encaso de futuras extensiones 
 ### [2]
 -2.a Describe el proceso que sigues para asegurarte que la refactorización no afecta a código que ya tenias desarrollado.
+
+Para asegurar de que la refactorizacion no afecta a la estructura del proyecto me asegure de hacer pruebas unitarias mediante mockk  
+Siendo estos los resultados:
+![Pruebas Unitarias](Imagenes/hola.png)
+
 ### [3]
 -3.a ¿Que funcionalidad del IDE has usado para aplicar la refactorización seleccionada? Si es necesario, añade capturas de pantalla para identificar la funcionalidad.
+La funcionalidad de Refactorizar lineas de codigo y en su defecto el importe de las clases a la hora de realizar las pruebas unitarias
