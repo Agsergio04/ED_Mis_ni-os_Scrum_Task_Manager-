@@ -33,21 +33,19 @@ Se han seleccionado y aplicado tres patrones de refactorización distintos media
 - **Objetivo:** Separar la lógica de filtrado de actividades en métodos privados para `Tarea` y `Evento`.  
 - **Antes:** Lógica inline en `contarTareasPorEstado` y `obtenerEventosEntreFechas`.  
 - **Después:** Métodos privados `filtrarTareasPorEstado(estado: EstadoTarea)` y `filtrarEventosEntre(inicio: LocalDate, fin: LocalDate)`.  
-- **Commit:** [commit-refactor-extract-method]
 
 ### 2.2. Introducir Objeto Parámetro (Introduce Parameter Object)
 
 - **Objetivo:** Reemplazar los parámetros `inicio: String` y `fin: String` por un objeto `RangoFechas` que encapsula dos `LocalDate`.  
 - **Antes:** Métodos `obtenerEventosEntreFechas(inicio: String, fin: String)` en `IActividadRepository`.  
 - **Después:** `obtenerEventosEntreFechas(rango: RangoFechas)` con validación centralizada de rangos.  
-- **Commit:** [commit-refactor-introduce-parameter-object]
+
 
 ### 2.3. Simplificar Condicional (Simplify Conditional)
 
 - **Objetivo:** Reducir la complejidad de condiciones en conteo de subtareas.  
 - **Antes:** `count { it.obtenerSubtareas().isNotEmpty() }`.  
 - **Después:** Delegar a método `tieneSubtareas()` dentro de `Tarea`, reemplazando la condición por `count { it.tieneSubtareas() }`.  
-- **Commit:** [commit-refactor-simplify-conditional]
 
 ---
 
@@ -66,7 +64,7 @@ Se han seleccionado y aplicado tres patrones de refactorización distintos media
 ---
 
 ### Prueba de depuracion
-![Pruebas Unitarias](Imagenes/.png)
+![Pruebas Unitarias](Imagenes/hola.png)
 
 ## Respuestas a las Preguntas
 
