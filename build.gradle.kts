@@ -1,6 +1,7 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
+    kotlin("jvm") version "1.8.21"
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
+    id("org.jetbrains.dokka") version "1.8.10"
 }
 
 group = "org.example"
@@ -10,8 +11,6 @@ repositories {
     mavenCentral()
 }
 
-
-
 dependencies {
     testImplementation(kotlin("test"))
 }
@@ -19,6 +18,12 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(21)
+}
+
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(buildDir.resolve("dokka"))
 }
