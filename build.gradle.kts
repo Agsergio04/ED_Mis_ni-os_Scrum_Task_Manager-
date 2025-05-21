@@ -10,15 +10,19 @@ repositories {
     mavenCentral()
 }
 
-
-
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation(kotlin("stdlib"))
+
+    // JUnit 5 API + Engine
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform() // <-- Muy importante
+    systemProperty("file.encoding", "UTF-8")
 }
+
 kotlin {
     jvmToolchain(21)
 }
