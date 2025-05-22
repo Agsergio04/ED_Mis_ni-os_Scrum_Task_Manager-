@@ -1,5 +1,7 @@
 plugins {
     kotlin("jvm") version "2.0.21"
+    id("io.gitlab.arturbosch.detekt") version "1.23.0"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 
 group = "org.example"
@@ -7,6 +9,17 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+detekt {
+    toolVersion = "1.23.1" // Coincide con la versión del plugin
+    config = files("detekt.yml") // Archivo de configuración personalizado (crearemos este archivo)
+    buildUponDefaultConfig = true // Parte de la configuración predeterminada
+    reports {
+        html.enabled = true // Reporte en HTML
+        xml.enabled = false
+        txt.enabled = false
+    }
 }
 
 dependencies {
@@ -24,5 +37,11 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain {
+        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "17"}}

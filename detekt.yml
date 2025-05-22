@@ -1,0 +1,17 @@
+build:
+  maxIssues: 100
+  weights:
+    complexity: 2
+    LongParameterList: 2
+    style: 1
+    comments: 1
+  excludes: '.*Test.kt' # Ignorar tests
+
+style:
+  MagicNumber:
+    active: true
+  # Aquí puedes activar o desactivar reglas, cambiar configuraciones
+
+comments:
+  CommentOverPrivateFunction:
+    active: false
