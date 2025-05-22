@@ -26,8 +26,7 @@ plugins {
 
 ![Captura de pantalla](capturas/Captura%20de%20pantalla%202025-05-22%20034459.png)
 
-
-
+![Captura de pantalla](capturas/Captura2.png)
 
 ---
 
