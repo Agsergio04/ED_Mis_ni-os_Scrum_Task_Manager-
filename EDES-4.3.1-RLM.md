@@ -56,6 +56,7 @@ fun filtrarActividades(...) = actividades.filter { act ->
     coincideTipo && coincideEstado && coincideEtiquetas && coincideUsuario && coincideFecha
 }
 ```
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/f349e6ee6be7fc4c534ae1e632e7bd7fd957d3ab)
 
 **Después**:
 ```kotlin
@@ -67,6 +68,8 @@ fun filtrarActividades(...) = actividades.filter { act ->
     coincideFecha(act, fechaFiltro)
 }
 ```
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/a7cffbc693de7845120d4e8aca5f989d541ddb16)
+
 
 ### 2. EmptyDefaultConstructor
 
@@ -78,11 +81,14 @@ fun filtrarActividades(...) = actividades.filter { act ->
 ```kotlin
 class ActividadRepository() : IActividadRepository
 ```
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/f349e6ee6be7fc4c534ae1e632e7bd7fd957d3ab)
 
 **Después**:
 ```kotlin
 class ActividadRepository : IActividadRepository
 ```
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/ce838864321d55a5129d608011e278aeb50cad51)
 
 ### 3. PackageDeclarationMismatch
 
@@ -95,8 +101,12 @@ class ActividadRepository : IActividadRepository
 package org.example
 ```
 
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/f349e6ee6be7fc4c534ae1e632e7bd7fd957d3ab)
+
 **Después**:
 (No se incluye declaración de paquete)
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/da802959e067739c73169945d6226178ca045fcf)
 
 ### 4. UnusedPrivateProperty
 
@@ -108,9 +118,12 @@ package org.example
 ```kotlin
 private val fechaCreacion: String,
 ```
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/f349e6ee6be7fc4c534ae1e632e7bd7fd957d3ab)
 
 **Después**:
 (Esta línea fue eliminada)
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/4615929edd751aab756999d51545f40ff576b706)
 
 ### 5. TooGenericExceptionCaught
 
@@ -125,12 +138,16 @@ private val fechaCreacion: String,
 }
 ```
 
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/f349e6ee6be7fc4c534ae1e632e7bd7fd957d3ab)
+
 **Después**:
 ```kotlin
 } catch(e: IllegalArgumentException) {
     println("Nombre inválido: ${e.message}")
 }
 ```
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/9bd4781e8d26d3dbae5f21535648ba1f95c20cef)
 
 ---
 
