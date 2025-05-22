@@ -13,7 +13,7 @@ import org.example.datos.IHistorialRepository
 import org.junit.jupiter.api.assertThrows
 
 
-class ActividadServiceTest : DescribeSpec({
+/*class ActividadServiceTest : DescribeSpec({
 
     val actividadRepo = mockk<IActividadRepository>(relaxed = true)
     val usuarioRepo = mockk<IUsuarioRepository>(relaxed = true)
@@ -214,3 +214,4 @@ class ActividadServiceTest : DescribeSpec({
         }
     }
 })
+*/

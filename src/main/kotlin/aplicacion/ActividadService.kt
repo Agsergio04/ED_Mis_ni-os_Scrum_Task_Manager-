@@ -86,43 +86,38 @@ class ActividadService(
     }
 
 
-    fun filtrarActividades(
-        tipo: String? = null,
-        estado: EstadoTarea? = null,
-        etiquetas: List<String>? = null,
-        nombreUsuario: String? = null,
-        fechaFiltro: String? = null
-    ): List<Actividad> {
+    fun filtrarActividades(filtro: FiltroActividadDTO): List<Actividad> {
         val actividades = listarActividades()
         val usuarios = listarUsuarios()
 
-        val usuario = nombreUsuario?.let {
-            usuarios.find { it.nombre.equals(it) }
+        val usuario = filtro.nombreUsuario?.let { nombre ->
+            usuarios.find { it.nombre.equals(nombre, ignoreCase = true) }
         }
 
         return actividades.filter { act ->
-            val coincideTipo = when (tipo?.uppercase()) {
+            val coincideTipo = when (filtro.tipo?.uppercase()) {
                 "TAREA" -> act is Tarea
                 "EVENTO" -> act is Evento
                 else -> true
             }
 
-            val coincideEstado = if (estado != null && act is Tarea) {
-                act.estadoTarea == estado
-            } else true  // Si no se especifica estado, lo dejamos pasar
+            val coincideEstado = if (filtro.estado != null && act is Tarea) {
+                act.estadoTarea == filtro.estado
+            } else true
 
-            val coincideEtiquetas = etiquetas?.all { tag -> act.etiquetas.contains(tag) } ?: true
+            val coincideEtiquetas = filtro.etiquetas?.all { tag -> act.etiquetas.contains(tag) } ?: true
 
             val coincideUsuario = if (usuario != null && act is Tarea) {
                 act.usuarioAsignado == usuario
             } else true
 
-            val coincideFecha = if (fechaFiltro != null && act is Evento) {
-                Utils.compararFecha(act.fecha, fechaFiltro)
+            val coincideFecha = if (filtro.fechaFiltro != null && act is Evento) {
+                Utils.compararFecha(act.fecha, filtro.fechaFiltro)
             } else true
 
             coincideTipo && coincideEstado && coincideEtiquetas && coincideUsuario && coincideFecha
         }
     }
+
 
 }

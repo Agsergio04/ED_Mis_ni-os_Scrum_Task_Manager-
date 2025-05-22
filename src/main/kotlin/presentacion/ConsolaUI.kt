@@ -2,12 +2,9 @@ package org.example.presentacion
 
 import DashboardService
 import org.example.aplicacion.ActividadService
-import org.example.dominio.Actividad
-import org.example.dominio.EstadoTarea
-import org.example.dominio.Evento
-import org.example.dominio.Usuario
+import org.example.dominio.*
 import java.util.*
-class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
+open class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  
     println("1. Crear nueva actividad")  
@@ -47,7 +44,7 @@ fun iniciar() {
     } while(opcion != 11)
 }
 
-    private fun crearUsuario() {
+    fun crearUsuario() {
         try {
             print("Nombre del usuario: ")
             val nombre = leerCadena()
@@ -58,7 +55,7 @@ fun iniciar() {
         }
     }
 
-    private fun asignarTarea() {
+    fun asignarTarea() {
         try {
             print("ID de la tarea: ")
             val idTarea = leerCadena().toInt()
@@ -90,18 +87,15 @@ fun iniciar() {
     }
 
 
-    private fun cambiarEstadoTarea() {
+    fun cambiarEstadoTarea() {
         try {
             println("\n=== CAMBIAR ESTADO DE TAREA ===")
-            print("Ingrese el ID de la tarea: ")
-            val id = leerCadena().toInt()
-            print("Seleccione el nuevo estado (1. ABIERTA, 2. EN_PROGRESO, 3. ACABADA): ")
-            when(leerOpcion()) {
-                1 -> servicio.cambiarEstadoTarea(id, EstadoTarea.ABIERTA)
-                2 -> servicio.cambiarEstadoTarea(id, EstadoTarea.EN_PROGRESO)
-                3 -> servicio.cambiarEstadoTarea(id, EstadoTarea.ACABADA)
-                else -> println("Opción no válida")
+            val id = solicitarIdTarea()
+            val nuevoEstado = solicitarNuevoEstado() ?: run {
+                println("Opción no válida")
+                return
             }
+            servicio.cambiarEstadoTarea(id, nuevoEstado)
             println("Estado actualizado exitosamente!")
         } catch(e: NumberFormatException) {
             println("Error: ID debe ser un número")
@@ -110,20 +104,43 @@ fun iniciar() {
         }
     }
 
-    private fun crearActividad() {
-        println("\nTipo de actividad:")
-        println("1. Tarea")
-        println("2. Evento")
-        println("3. Cancelar")
-        print("Seleccione: ")
-        when(leerOpcion()) {
-            1 -> crearTarea()
-            2 -> crearEvento()
-            3 -> return
-            else -> println("Opción no válida")
+    private fun solicitarIdTarea(): Int {
+        print("Ingrese el ID de la tarea: ")
+        return leerCadena().toInt()
+    }
+
+    private fun solicitarNuevoEstado(): EstadoTarea? {
+        print("Seleccione el nuevo estado (1. ABIERTA, 2. EN_PROGRESO, 3. ACABADA): ")
+        return when(leerOpcion()) {
+            1 -> EstadoTarea.ABIERTA
+            2 -> EstadoTarea.EN_PROGRESO
+            3 -> EstadoTarea.ACABADA
+            else -> null
         }
     }
-    private fun crearTarea() {
+
+
+    fun crearActividad() {
+        println("\n=== CREAR ACTIVIDAD ===")
+        println("1. Crear Tarea")
+        println("2. Crear Evento")
+        println("3. Cancelar")
+        print("Seleccione una opción: ")
+
+        val opcion = leerOpcion()
+
+        val opciones = mapOf(
+            1 to { crearTarea() },
+            2 to { crearEvento() },
+            3 to { println("Creación cancelada.") }
+        )
+
+        val accion = opciones[opcion] ?: { println("Opción no válida") }
+        accion()
+    }
+
+
+    open fun crearTarea() {
         try {
             print("Descripción de la tarea: ")
             val desc = leerCadena()
@@ -135,7 +152,7 @@ fun iniciar() {
             println("Error: ${e.message}")
         }
     }
-    private fun crearEvento() {
+    open fun crearEvento() {
         try {
             print("Descripción del evento: ")
             val desc = leerCadena()
@@ -208,7 +225,7 @@ fun asociarSubtarea() {
 }
 
 
-private fun mostrarDashboard() {
+fun mostrarDashboard() {
     println("\n=== PANEL DE CONTROL ===")
     
     
@@ -276,14 +293,8 @@ private fun mostrarDashboard() {
             listOf("HOY", "MAÑANA", "SEMANA", "MES").contains(it)
         }
 
-        // Llamamos a la función de filtrar actividades desde el servicio
-        val filtradas = servicio.filtrarActividades(
-            tipo = tipo,
-            estado = estado,
-            etiquetas = etiquetas,
-            nombreUsuario = nombreUsuario,
-            fechaFiltro = fechaFiltro
-        )
+        val filtro = FiltroActividadDTO(tipo, estado, etiquetas, nombreUsuario, fechaFiltro)
+        val filtradas = servicio.filtrarActividades(filtro)
 
         println("Actividades filtradas: ${filtradas.size}")
         filtradas.forEach { println(it.obtenerDetalle()) }
