@@ -18,19 +18,19 @@ Instalaremos el programa Ktlint:
 - 1
 
 No es recomendable importar con * porque puede ocultar dependencias no utilizadas y hace el codigo menos claro
-![img.png](ActividadService.png)
+![img.png](img/ActividadService.png)
 
 Aqui lo que he hecho es definir cada depencencia para que sea mas claro y menos lioso
-![img.png](ActividadServiceCorregida.png)
+![img.png](img/ActividadServiceCorregida.png)
 
 - 2
 
 Este metodo no esta implementando correctamente. No cuenta cuantas tareas tienen subtareas asociadas
 
-![img.png](ActividadRepositoryError.png)
+![img.png](img/ActividadRepositoryError.png)
 
 Ahora si cuenta cuantas tareas tienen subtareas asociadas
-![img.png](ActividadRepositoryCorregido.png)
+![img.png](img/ActividadRepositoryCorregido.png)
 
 - 3
 
