@@ -97,32 +97,46 @@ class ActividadService(
         val usuarios = listarUsuarios()
 
         val usuario = nombreUsuario?.let {
-            usuarios.find { it.nombre.equals(it) }
+            usuarios.find { it.nombre == nombreUsuario }
         }
 
         return actividades.filter { act ->
-            val coincideTipo = when (tipo?.uppercase()) {
-                "TAREA" -> act is Tarea
-                "EVENTO" -> act is Evento
-                else -> true
-            }
-
-            val coincideEstado = if (estado != null && act is Tarea) {
-                act.estadoTarea == estado
-            } else true  // Si no se especifica estado, lo dejamos pasar
-
-            val coincideEtiquetas = etiquetas?.all { tag -> act.etiquetas.contains(tag) } ?: true
-
-            val coincideUsuario = if (usuario != null && act is Tarea) {
-                act.usuarioAsignado == usuario
-            } else true
-
-            val coincideFecha = if (fechaFiltro != null && act is Evento) {
-                Utils.compararFecha(act.fecha, fechaFiltro)
-            } else true
-
-            coincideTipo && coincideEstado && coincideEtiquetas && coincideUsuario && coincideFecha
+            filtrarPorTipo(act, tipo) &&
+                    filtrarPorEstado(act, estado) &&
+                    filtrarPorEtiquetas(act, etiquetas) &&
+                    filtrarPorUsuario(act, usuario) &&
+                    filtrarPorFecha(act, fechaFiltro)
         }
+    }
+
+    private fun filtrarPorTipo(act: Actividad, tipo: String?): Boolean {
+        return when (tipo?.uppercase()) {
+            "TAREA" -> act is Tarea
+            "EVENTO" -> act is Evento
+            else -> true
+        }
+    }
+
+    private fun filtrarPorEstado(act: Actividad, estado: EstadoTarea?): Boolean {
+        return if (estado != null && act is Tarea) {
+            act.estadoTarea == estado
+        } else true
+    }
+
+    private fun filtrarPorEtiquetas(act: Actividad, etiquetas: List<String>?): Boolean {
+        return etiquetas?.all { tag -> act.etiquetas.contains(tag) } ?: true
+    }
+
+    private fun filtrarPorUsuario(act: Actividad, usuario: Usuario?): Boolean {
+        return if (usuario != null && act is Tarea) {
+            act.usuarioAsignado == usuario
+        } else true
+    }
+
+    private fun filtrarPorFecha(act: Actividad, fechaFiltro: String?): Boolean {
+        return if (fechaFiltro != null && act is Evento) {
+            Utils.compararFecha(act.fecha, fechaFiltro)
+        } else true
     }
 
 }
