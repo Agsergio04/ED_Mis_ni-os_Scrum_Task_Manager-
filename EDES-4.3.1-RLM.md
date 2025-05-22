@@ -132,6 +132,7 @@ private val fechaCreacion: String,
 }
 ```
 
+---
 
 ### Resultado tras correcciones:
 
