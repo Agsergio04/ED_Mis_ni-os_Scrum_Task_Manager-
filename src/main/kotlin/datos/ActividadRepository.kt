@@ -32,9 +32,10 @@ class ActividadRepository() : IActividadRepository {
                              it.fecha >= inicio && it.fecha <= fin 
                          }
     }
-    
+
     override fun contarTareasConSubtareas(): Int {
-        
-        return 0
+        return actividades.filterIsInstance<Tarea>()
+            .count { it.obtenerSubtareas().isNotEmpty() }
     }
+
 }

@@ -4,8 +4,12 @@ import DashboardService
 import org.example.datos.IActividadRepository
 import org.example.datos.IUsuarioRepository
 import org.example.aplicacion.HistorialService
-import org.example.dominio.*
-import org.example.utilidades.Utils
+import org.example.dominio. Tarea
+import org.example.dominio.Evento
+import org.example.dominio.Actividad
+import org.example.dominio.Usuario
+import org.example.dominio.EstadoTarea
+import org.example.dominio.Historial
 
 /**
  * Gestiona la lógica de negocio de actividades, usuarios e historial.

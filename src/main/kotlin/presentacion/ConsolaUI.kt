@@ -6,7 +6,9 @@ import org.example.dominio.Actividad
 import org.example.dominio.EstadoTarea
 import org.example.dominio.Evento
 import org.example.dominio.Usuario
-import java.util.*
+import java.util.Scanner
+
+
 class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  

@@ -13,11 +13,34 @@ Instalaremos el programa Ktlint:
 - Una vez instalado tendremos que reiniciar el ID.
 
 
+# 5 Tipos de errores
 
+- 1
 
+No es recomendable importar con * porque puede ocultar dependencias no utilizadas y hace el codigo menos claro
+![img.png](ActividadService.png)
 
+Aqui lo que he hecho es definir cada depencencia para que sea mas claro y menos lioso
+![img.png](ActividadServiceCorregida.png)
 
+- 2
 
+Este metodo no esta implementando correctamente. No cuenta cuantas tareas tienen subtareas asociadas
+
+![img.png](ActividadRepositoryError.png)
+
+Ahora si cuenta cuantas tareas tienen subtareas asociadas
+![img.png](ActividadRepositoryCorregido.png)
+
+- 3
+
+El catch (e: Exception) es demasiado general y puede ocultar otros errores en el codigo
+![img.png](UtilsError.png)
+
+Ahora se captura el error DataTimeParseExceptio.
+![img.png](UtilsCorregido.png)
+
+- 4
 
 
 

@@ -2,20 +2,23 @@ package org.example.utilidades
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 object Utils {
     fun obtenerFechaActual(): String {
         val formato = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return java.time.LocalDate.now().format(formato)
     }
-    fun esFechaValida(fecha: String): Boolean {
+    fun esFechaValida(fecha: String?, formato: String = "yyyy-MM-dd"): Boolean {
+        if (fecha.isNullOrBlank()) return false
         return try {
-            java.time.LocalDate.parse(fecha)
+            val formatter = DateTimeFormatter.ofPattern(formato)
+            LocalDate.parse(fecha, formatter)
             true
-        } catch (e: Exception) {
+        } catch (e: DateTimeParseException) {
             false
         }
-    }
+    }}
 
     fun compararFecha(fecha: String, filtro: String): Boolean {
         val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
