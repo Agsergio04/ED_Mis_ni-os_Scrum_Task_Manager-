@@ -1,6 +1,3 @@
-package org.example  
-
-import DashboardService
 import org.example.aplicacion.ActividadService
 import org.example.aplicacion.HistorialService  
 import org.example.datos.ActividadRepository  
