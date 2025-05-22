@@ -37,6 +37,8 @@ plugins {
 
 ## Errores detectados y correcciones
 
+He elegido estos cinco errores para realizar esta práctica:
+
 ### 1. CyclomaticComplexMethod
 
 - **Descripción**: El método `filtrarActividades` tenía una complejidad ciclomática de 16.
