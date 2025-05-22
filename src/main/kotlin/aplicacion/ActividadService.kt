@@ -3,7 +3,6 @@ package org.example.aplicacion
 import DashboardService
 import org.example.datos.IActividadRepository
 import org.example.datos.IUsuarioRepository
-import org.example.aplicacion.HistorialService
 import org.example.dominio.*
 import org.example.utilidades.Utils
 

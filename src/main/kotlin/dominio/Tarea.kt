@@ -1,7 +1,7 @@
 package org.example.dominio
 
 import org.example.utilidades.Utils
-import org.example.dominio.EstadoTarea
+
 /**
  * Crea la instancia de una tarea.
  *

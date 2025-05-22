@@ -4,7 +4,7 @@ import DashboardService
 import org.example.aplicacion.ActividadService
 import org.example.dominio.*
 import java.util.*
-open class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
+class ConsolaUI(private val servicio: ActividadService, private val dashboardService: DashboardService) {
     private fun mostrarMenu() {  
     println("\n=== GESTOR DE ACTIVIDADES ===")  
     println("1. Crear nueva actividad")  
@@ -44,18 +44,18 @@ fun iniciar() {
     } while(opcion != 11)
 }
 
-    fun crearUsuario() {
+    private fun crearUsuario() {
         try {
             print("Nombre del usuario: ")
             val nombre = leerCadena()
             val usuario = servicio.crearUsuario(nombre)
             println("Usuario creado con ID: ${usuario.obtenerId()}")
-        } catch(e: Exception) {
+        } catch(e: IllegalArgumentException) {
             println("Error al crear usuario: ${e.message}")
         }
     }
 
-    fun asignarTarea() {
+    private fun asignarTarea() {
         try {
             print("ID de la tarea: ")
             val idTarea = leerCadena().toInt()
@@ -87,7 +87,7 @@ fun iniciar() {
     }
 
 
-    fun cambiarEstadoTarea() {
+    private fun cambiarEstadoTarea() {
         try {
             println("\n=== CAMBIAR ESTADO DE TAREA ===")
             val id = solicitarIdTarea()
@@ -119,14 +119,12 @@ fun iniciar() {
         }
     }
 
-
-    fun crearActividad() {
-        println("\n=== CREAR ACTIVIDAD ===")
-        println("1. Crear Tarea")
-        println("2. Crear Evento")
+    private fun crearActividad() {
+        println("\nTipo de actividad:")
+        println("1. Tarea")
+        println("2. Evento")
         println("3. Cancelar")
-        print("Seleccione una opción: ")
-
+        print("Seleccione: ")
         val opcion = leerOpcion()
 
         val opciones = mapOf(
@@ -139,8 +137,7 @@ fun iniciar() {
         accion()
     }
 
-
-    open fun crearTarea() {
+    private fun crearTarea() {
         try {
             print("Descripción de la tarea: ")
             val desc = leerCadena()
@@ -152,7 +149,7 @@ fun iniciar() {
             println("Error: ${e.message}")
         }
     }
-    open fun crearEvento() {
+    private fun crearEvento() {
         try {
             print("Descripción del evento: ")
             val desc = leerCadena()
@@ -225,7 +222,7 @@ fun asociarSubtarea() {
 }
 
 
-fun mostrarDashboard() {
+private fun mostrarDashboard() {
     println("\n=== PANEL DE CONTROL ===")
     
     

@@ -1,8 +1,6 @@
 package org.example.datos
 
-import org.example.dominio.Actividad
-import org.example.dominio.EstadoTarea
-import org.example.dominio.Evento
+import org.example.dominio.*
 
 /**
  * Crea la interfaz IActividadRepository.
