@@ -35,10 +35,10 @@ Ahora si cuenta cuantas tareas tienen subtareas asociadas
 - 3
 
 El catch (e: Exception) es demasiado general y puede ocultar otros errores en el codigo
-![img.png](UtilsError.png)
+![img.png](img/UtilsError.png)
 
 Ahora se captura el error DataTimeParseExceptio.
-![img.png](UtilsCorregido.png)
+![img.png](img/UtilsCorregido.png)
 
 - 4
 
