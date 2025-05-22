@@ -18,12 +18,12 @@ class Tarea private constructor(
     descripcion: String,
     private var estado: EstadoTarea,
     var usuarioAsignado: Usuario? = null,
-    etiquetas: String,
+    etiquetas: EstadoTarea,
     val subtareas: MutableList<Tarea> = mutableListOf()
 ) : Actividad(id, fechaCreacion, descripcion, etiquetas) {
 
     companion object {
-        fun creaInstancia(desc: String, etiquetas: String): Tarea {
+        fun creaInstancia(desc: String, etiquetas: EstadoTarea): Tarea {
             require(desc.isNotEmpty()) { "Descripción no puede estar vacía" }
             val fechaActual = Utils.obtenerFechaActual()
             return Tarea(
