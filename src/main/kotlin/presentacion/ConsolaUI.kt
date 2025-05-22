@@ -53,7 +53,7 @@ fun iniciar() {
             val nombre = leerCadena()
             val usuario = servicio.crearUsuario(nombre)
             println("Usuario creado con ID: ${usuario.obtenerId()}")
-        } catch(e: Exception) {
+        } catch(e: IllegalArgumentException) {
             println("Error al crear usuario: ${e.message}")
         }
     }
