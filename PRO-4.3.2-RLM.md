@@ -111,6 +111,10 @@ private fun solicitarNuevoEstado(): EstadoTarea? {
 }
 ```
 
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/29747db11722f837bafa7c79e14acb2319c7a598)
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/a34fb915177b43e20704b5500b5dab66f93c1a7c)
+
 ### Herramienta utilizada
 
 Para realizar la extracción, utilicé la funcionalidad de IntelliJ IDEA (`Refactor > Extract > Method`) de forma guiada y segura.
@@ -151,6 +155,10 @@ val filtro = FiltroActividadDTO(tipo, estado, etiquetas, nombreUsuario, fechaFil
 val filtradas = servicio.filtrarActividades(filtro)
 ```
 
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/29747db11722f837bafa7c79e14acb2319c7a598)
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/a34fb915177b43e20704b5500b5dab66f93c1a7c)
+
 ### Beneficios
 
 - Reducción de parámetros sueltos.
@@ -188,6 +196,10 @@ val opcion = leerOpcion()
         accion()
 ```
 
+[Commit anterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/29747db11722f837bafa7c79e14acb2319c7a598)
+
+[Commit posterior](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/a34fb915177b43e20704b5500b5dab66f93c1a7c)
+
 ### Beneficios
 
 - Código más compacto y flexible.
@@ -197,15 +209,6 @@ val opcion = leerOpcion()
 ### Pruebas
 
 Comprobé que las opciones válidas funcionaban correctamente y que las inválidas mostraban el mensaje adecuado.
-
-
-### Commit anterior a las refactorizaciones:
-
-[29747db](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/29747db11722f837bafa7c79e14acb2319c7a598)
-
-### Commit posterior a las refactorizaciones:
-
-[a34fb91](https://github.com/Agsergio04/ED_Mis_ninios_Scrum_Task_Manager-/tree/a34fb915177b43e20704b5500b5dab66f93c1a7c)
 
 ---
 
