@@ -40,10 +40,18 @@ Pasos realizados:
 2. Al ejecutar el programa en modo Debug, se creó una tarea con estado “ACABADA”.
 3. En el punto de interrupción, se inspeccionó la variable `estado` y se confirmó que no se estaba asignando correctamente.
 4. El valor se mantenía como “ABIERTA” tras finalizar el método.
+   
+![image](https://github.com/user-attachments/assets/3161c6e8-02f9-4c9d-ad71-2c334f3b74f4)
+![image](https://github.com/user-attachments/assets/9fd6a478-6774-4f79-ab80-2f98c037be43)
+
 
 ### Solución
 
 Se corrigió el método `cambiarEstado` para que asignara correctamente el nuevo estado:
+
+![image](https://github.com/user-attachments/assets/a68aed60-9039-4269-b549-88266a063a23)
+![image](https://github.com/user-attachments/assets/83f0cb75-244a-46c6-842c-da8bb94684eb)
+
 
 ```kotlin
 fun cambiarEstado(estado: EstadoTarea) {
@@ -110,11 +118,22 @@ El uso de logging fue clave en esta depuración. A través del registro en tiemp
 
 Aunque `dashboardService` se pasaba al constructor de `ConsolaUI`, no se almacenaba como propiedad. Por ello, al llamar al método `mostrarDashboard()`, se producía un error al intentar acceder al servicio.
 
+#### Fragmentos de código antes de la resolución
+
+![image](https://github.com/user-attachments/assets/ebd842f9-6300-4676-be6c-5acf37f9d302)
+![image](https://github.com/user-attachments/assets/f58032ea-9915-4f33-9ec9-08ed532080e0)
+![image](https://github.com/user-attachments/assets/c2eec673-eb61-49e9-8c93-1446a2bc3184)ç
+
 ### Diagnóstico y solución
 
 1. Revisamos la definición de la clase `ConsolaUI` y detectamos que `dashboardService` no se guardaba como propiedad.
 2. Al ejecutar en modo Debug, el valor de `dashboardService` era `null`.
 3. Solucionamos el error declarando `dashboardService` como una propiedad de clase y asignándole el valor del constructor.
+
+#### Fragmentos de código despues de la resolución
+
+![image](https://github.com/user-attachments/assets/b0c17b64-0e1f-4959-8096-5c93e99dcc84)
+![image](https://github.com/user-attachments/assets/98b4c19c-7549-4a9c-959d-ad80de692f64)
 
 ### Conclusión
 
