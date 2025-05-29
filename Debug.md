@@ -89,23 +89,33 @@ Se trató de un error común en lógica de generación incremental. El depurador
 
 ### Descripción del problema
 
-Al seleccionar la opción “Ver historial de actividad” desde `ConsolaUI`, no se mostraba ningún resultado, aunque se hubieran creado o modificado tareas previamente.
+Al seleccionar la opción “Ver historial de actividad” desde `ConsolaUI`, no se mostraba ningún resultado, aunque se hubieran creado o modificado tareas previamente.<br>
+![image](https://github.com/user-attachments/assets/53a3602f-8340-4f45-b0c1-09fb1edc4c57)<br>
 
-### Diagnóstico
 
-El flujo de ejecución era correcto, pero el repositorio de historial devolvía una lista vacía. Activamos el **logging en nivel DEBUG** y obtuvimos:
+### Diagnóstico<br>
+
+El flujo de ejecución era correcto, pero el repositorio de historial devolvía una lista vacía. Activamos el **logging en nivel DEBUG** y obtuvimos:<br>
+![image](https://github.com/user-attachments/assets/c991a2a5-bc13-4dc2-87c9-c8d59d7f8ece)<br>
+
 
 ```log
 [DEBUG] No se registró ninguna acción
 ```
 
-Esto nos indicó que nunca se llamaba al método `historialService.registrarAccion(...)`.
+Nunca se llamaba a `historialService.registrarAccion(...)` desde los métodos de creación o actualización de actividades, por lo que el repositorio permanecía siempre vacío. Además al no mostrar la id de la tarea creada, resulta imposible adivinarla.
 
-### Solución
+### Solución <br>
+![image](https://github.com/user-attachments/assets/59f92bbd-b7be-4451-b853-6437697ef8b5)<br>
 
 1. Añadimos una llamada explícita a `registrarAccion()` en los métodos de creación y actualización de tareas.
 2. Agregamos también un log del ID de la tarea creada para facilitar la trazabilidad posterior.
-3. Volvimos a ejecutar el programa y observamos, tanto en la salida como en el archivo `app.log`, que ahora se registraban correctamente las acciones realizadas.
+3. Volvimos a ejecutar el programa y observamos, tanto en la salida como en el archivo `app.log`, que ahora se registraban correctamente las acciones realizadas.<br>
+![image](https://github.com/user-attachments/assets/5dc6b37f-3740-498c-aa8c-f12be4afbeed)<br>
+![image](https://github.com/user-attachments/assets/c1fc33dc-eef6-42a5-a50a-85dd9cc62fd5)<br>
+![image](https://github.com/user-attachments/assets/90e777d6-c104-49dc-b3df-1e484686eaa6)<br>
+
+
 
 ### Conclusión
 
