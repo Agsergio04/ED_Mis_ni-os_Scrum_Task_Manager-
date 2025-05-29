@@ -77,13 +77,23 @@ Cada vez que se creaba un nuevo usuario, este obtenía siempre el mismo identifi
 Revisando el método de generación de ID, detectamos que no se estaba incrementando correctamente. Aplicamos una solución sencilla:
 
 1. **Inspeccionamos la función que generaba los IDs**, y observamos que el valor no persistía entre llamadas.
-2. **Modificamos el método** para que cada vez que se generara un nuevo ID, este se incrementara en 1.
-3. Verificamos mediante el depurador que el valor retornado en cada nueva creación de usuario era distinto al anterior.
+   ![image](https://github.com/user-attachments/assets/549f5c85-fa72-4f62-89c3-90650df8b3b9)
+   
+3. **Modificamos el método** para que cada vez que se generara un nuevo ID, este se incrementara en 1.
+   ![image](https://github.com/user-attachments/assets/53c488e6-fe8d-44a9-950e-d33d49f12cc3)
+   
+5. Verificamos mediante el depurador que el valor retornado en cada nueva creación de usuario era distinto al anterior.
+  ![image](https://github.com/user-attachments/assets/05f8c702-45a9-4b80-b322-3bd4606420f7)
+6. Aqui vemos que el segundo usuario ya tiene otro ID diferente
+  ![image](https://github.com/user-attachments/assets/09836333-f986-482f-9e71-80fbb6a83ce1)
+
+
 
 ### Conclusión
 
 Se trató de un error común en lógica de generación incremental. El depurador ayudó a confirmar que el valor retornado por la función de ID cambiaba correctamente con cada invocación.
 
+El problema era que todos los usuarios tenían el mismo ID porque no existía un control de incremento. La solucion era añadiendo una función que lleva la cuenta del último ID usado y genera el siguiente automáticamente, asegurando que cada usuario tenga un ID único.
 
 ## ERROR 4 — Historial no muestra registros
 
